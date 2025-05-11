@@ -5,7 +5,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Data essays, dashboards, and storytelling from the Indian BFSI world. Built by experts, designed for the underserved.">
-
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -14,6 +13,21 @@
       padding: 0;
       background-color: #fdfdfd;
       color: #2c3e50;
+    }
+
+    .navbar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      padding: 10px 20px;
+      z-index: 2;
+    }
+
+    .navbar img {
+      height: 50px;
     }
 
     header {
@@ -33,12 +47,11 @@
       content: "";
       position: absolute;
       top: 0; left: 0; right: 0; bottom: 0;
-      background-color: rgba(0, 0, 0, 0.5); /* dark overlay */
+      background-color: rgba(0, 0, 0, 0.6); /* stronger dark overlay for readability */
     }
 
     header h1,
     header p,
-    .quote,
     .scroll-link {
       position: relative;
       z-index: 1;
@@ -46,13 +59,7 @@
 
     header h1 {
       font-size: 2.8em;
-      margin: 0 0 10px;
-    }
-
-    .quote {
-      font-size: 1.2em;
-      font-style: italic;
-      margin: 10px 0;
+      margin: 60px 0 10px;
     }
 
     .scroll-link {
@@ -104,9 +111,13 @@
 </head>
 <body>
 
+  <div class="navbar">
+    <img src="logo.png" alt="BFSI Open Data Logo">
+  </div>
+
   <header>
     <h1>BFSI Open Data</h1>
-    <p class="quote">“Without data you’re just another person with an opinion.” – W. Edwards Deming</p>
+    <p><strong>Insurance & Financial Services Expert | Strategist | Advocate for the Underserved</strong></p>
     <a href="#main" class="scroll-link">↓ Scroll to explore</a>
   </header>
 
