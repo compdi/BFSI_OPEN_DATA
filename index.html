@@ -5,79 +5,146 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Data essays, dashboards, and storytelling from the Indian BFSI world. Built by experts, designed for the underserved.">
+
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       line-height: 1.7;
-      max-width: 850px;
-      margin: 40px auto;
-      padding: 0 20px;
+      margin: 0;
+      padding: 0;
       background-color: #fdfdfd;
       color: #2c3e50;
     }
-    h1, h2 {
+
+    header {
+      position: relative;
+      background: url('deming.jpeg') no-repeat center center;
+      background-size: cover;
+      color: white;
+      height: 500px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    header::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: rgba(0, 0, 0, 0.5); /* dark overlay */
+    }
+
+    header h1,
+    header p,
+    .quote,
+    .scroll-link {
+      position: relative;
+      z-index: 1;
+    }
+
+    header h1 {
+      font-size: 2.8em;
+      margin: 0 0 10px;
+    }
+
+    .quote {
+      font-size: 1.2em;
+      font-style: italic;
+      margin: 10px 0;
+    }
+
+    .scroll-link {
+      margin-top: 20px;
+      font-size: 1em;
+      background: rgba(255, 255, 255, 0.2);
+      padding: 8px 14px;
+      border-radius: 20px;
+      border: 1px solid #fff;
+      color: white;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+
+    .scroll-link:hover {
+      background: rgba(255, 255, 255, 0.4);
+    }
+
+    .content {
+      max-width: 850px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    h2 {
       color: #1a1a1a;
     }
-    .badge {
-      font-size: 1.2em;
-      margin-bottom: 10px;
-    }
+
     .highlight {
       background: #e1f5fe;
       padding: 4px 8px;
       border-radius: 5px;
       display: inline-block;
     }
+
     a {
       color: #0077cc;
       text-decoration: none;
     }
+
     a:hover {
       text-decoration: underline;
     }
+
     .section {
       margin-bottom: 30px;
     }
   </style>
 </head>
 <body>
-  <h1>BFSI Open Data</h1>
-  <p class="badge">📝 Data Essays | 📚 Good Reads</p>
 
-  <div class="section">
-    <p><strong>Insurance | Financial data | News | Analysis | Storytelling using Data</strong></p>
-    <p class="highlight">
-      🌟 Insurance & Financial Services Expert | Strategist | Advocate for the Underserved 🌟
-    </p>
+  <header>
+    <h1>BFSI Open Data</h1>
+    <p class="quote">“Without data you’re just another person with an opinion.” – W. Edwards Deming</p>
+    <p><strong>Insurance & Financial Services Expert | Strategist | Advocate for the Underserved</strong></p>
+    <a href="#main" class="scroll-link">↓ Scroll to explore</a>
+  </header>
+
+  <div id="main" class="content">
+    <div class="section">
+      <p><strong>Insurance | Financial data | News | Analysis | Storytelling using Data</strong></p>
+    </div>
+
+    <div class="section">
+      <h2>Why We Exist</h2>
+      <p>
+        Financial services aren’t just about numbers—they’re about people. Whether it’s demystifying the world of insurance and finance for the average Joe or crafting strategies that make sense for everyone from gig workers to CEOs, we are here to make the complex simple and the inaccessible, well… accessible.
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>What We Do</h2>
+      <p>
+        We specialize in creating solutions that protect and empower. Our expertise ranges from underwriting and compliance to risk management and financial product development. But at the heart of it all, we have a simple motto: <strong>serve the underserved</strong>. Because everyone deserves a safety net, even if they can’t afford the ‘premium’ package.
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>What Drives Us</h2>
+      <p>
+        We are on a mission to break down barriers in the financial world, especially for those who’ve been historically overlooked—think gig workers, freelancers, and small business owners or underinformed. These are the people who keep our economy running, and we are dedicated to making sure they have the tools they need to thrive.
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>Let’s Connect</h2>
+      <p>
+        Whether you’re looking to discuss the latest trends in financial services and insurance, explore collaboration opportunities, or just want to chat about how we can make financial services more inclusive, we're just a message away. Let’s work together to build a future where financial security isn’t a privilege, but a right.
+      </p>
+      <p>📧 Reach us at <a href="mailto:compliancedigest1@gmail.com">compliancedigest1@gmail.com</a></p>
+    </div>
   </div>
 
-  <div class="section">
-    <h2>Why We Exist</h2>
-    <p>
-      Financial services aren’t just about numbers—they’re about people. Whether it’s demystifying the world of insurance and finance for the average Joe or crafting strategies that make sense for everyone from gig workers to CEOs, we are here to make the complex simple and the inaccessible, well… accessible.
-    </p>
-  </div>
-
-  <div class="section">
-    <h2>What We Do</h2>
-    <p>
-      We specialize in creating solutions that protect and empower. Our expertise ranges from underwriting and compliance to risk management and financial product development. But at the heart of it all, we have a simple motto: <strong>serve the underserved</strong>. Because everyone deserves a safety net, even if they can’t afford the ‘premium’ package.
-    </p>
-  </div>
-
-  <div class="section">
-    <h2>What Drives Us</h2>
-    <p>
-      We are on a mission to break down barriers in the financial world, especially for those who’ve been historically overlooked—think gig workers, freelancers, and small business owners or underinformed. These are the people who keep our economy running, and we are dedicated to making sure they have the tools they need to thrive.
-    </p>
-  </div>
-
-  <div class="section">
-    <h2>Let’s Connect</h2>
-    <p>
-      Whether you’re looking to discuss the latest trends in financial services and insurance, explore collaboration opportunities, or just want to chat about how we can make financial services more inclusive, we're just a message away. Let’s work together to build a future where financial security isn’t a privilege, but a right.
-    </p>
-    <p>📧 Reach us at <a href="mailto:compliancedigest1@gmail.com">compliancedigest1@gmail.com</a></p>
-  </div>
 </body>
 </html>
