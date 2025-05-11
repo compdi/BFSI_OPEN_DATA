@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>BFSI Open Data</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BFSI Open Data</title>
   <meta name="description" content="Data essays, dashboards, and storytelling from the Indian BFSI world. Built by experts, designed for the underserved.">
   <style>
     :root {
@@ -17,195 +17,102 @@
     }
 
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      line-height: 1.7;
+      display: flex;
       margin: 0;
-      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background-color: var(--bg-color);
       color: var(--text-color);
-      transition: background-color 0.3s, color 0.3s;
+      scroll-behavior: smooth;
     }
 
-    .navbar {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 20px;
-      z-index: 2;
-    }
-
-    .navbar img {
-      height: 110px;
-      background: white;
-      padding: 10px;
-      border-radius: 10px;
-      box-shadow: 0 0 8px rgba(0,0,0,0.2);
-    }
-
-    .navbar-right {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .theme-toggle {
-      padding: 6px 12px;
-      background: #fff;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 0.9em;
-    }
-
-    body.dark-theme .theme-toggle {
-      background: #333;
-      color: #fff;
-      border-color: #666;
-    }
-
-    .social-floating {
+    /* Sidebar */
+    .sidebar {
+      width: 200px;
+      background-color: #2c3e50;
+      color: white;
+      height: 100vh;
+      padding-top: 2rem;
       position: fixed;
-      bottom: 20px;
-      right: 20px;
+      left: 0;
+      top: 0;
       display: flex;
       flex-direction: column;
-      gap: 10px;
-      z-index: 999;
+      align-items: center;
     }
 
-    .social-icon {
-      width: 40px;
-      height: 40px;
-    }
-
-    header {
-      background-color: transparent;
-      padding: 150px 20px 60px;
-      text-align: center;
-    }
-
-    header h1 {
-      font-size: 5.5em;
+    .sidebar a {
+      color: white;
+      text-decoration: none;
       font-weight: bold;
-      margin-bottom: 10px;
+      margin: 1rem 0;
     }
 
-    header p {
-      font-size: 1.1em;
-      margin: 0 auto;
+    /* Main content */
+    .main-content {
+      margin-left: 200px;
+      padding: 2rem;
+      width: 100%;
     }
 
-    .scroll-link {
-      margin-top: 20px;
-      font-size: 1em;
-      background: rgba(0, 0, 0, 0.1);
-      padding: 8px 14px;
-      border-radius: 20px;
-      border: 1px solid #333;
-      color: #333;
+    /* Business Data Block */
+    .data-block {
+      padding: 2rem 0;
+    }
+
+    .data-card {
+      max-width: 800px;
+      background: var(--bg-color);
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      overflow: hidden;
+      transition: transform 0.2s ease-in-out;
+    }
+
+    .data-card:hover {
+      transform: scale(1.02);
+    }
+
+    .data-image {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .data-content {
+      padding: 1.5rem;
+    }
+
+    .data-content h2 {
+      margin-top: 0;
+    }
+
+    .download-link {
+      color: #007bff;
+      font-weight: bold;
       text-decoration: none;
-      transition: background 0.3s;
-    }
-
-    .scroll-link:hover {
-      background: rgba(0, 0, 0, 0.2);
-    }
-
-    .content {
-      max-width: 850px;
-      margin: 40px auto;
-      padding: 0 20px;
-    }
-
-    h2 {
-      color: var(--text-color);
-    }
-
-    .highlight {
-      background: #e1f5fe;
-      padding: 4px 8px;
-      border-radius: 5px;
-      display: inline-block;
-    }
-
-    a {
-      color: #0077cc;
-      text-decoration: none;
-    }
-
-    a:hover {
-      text-decoration: underline;
-    }
-
-    .section {
-      margin-bottom: 30px;
     }
   </style>
 </head>
+
 <body>
-  <div class="navbar">
-    <a href="/">
-      <img src="Logo.png" alt="BFSI Open Data Logo">
-    </a>
-    <div class="navbar-right">
-      <button class="theme-toggle" onclick="toggleTheme()">Toggle Theme</button>
-    </div>
+  <!-- Sidebar Navigation -->
+  <div class="sidebar">
+    <a href="#business-data">📊 Business Data</a>
   </div>
 
-  <div class="social-floating">
-    <a href="https://www.linkedin.com/in/compliance-digest%E2%84%A2-6712891a7/" target="_blank"><img class="social-icon" src="https://cdn-icons-png.flaticon.com/512/145/145807.png" alt="LinkedIn"></a>
-    <a href="https://www.instagram.com/comp_di/" target="_blank"><img class="social-icon" src="https://cdn-icons-png.flaticon.com/512/174/174855.png" alt="Instagram"></a>
-    <a href="https://x.com/compli_d" target="_blank"><img class="social-icon" src="https://cdn-icons-png.flaticon.com/512/733/733579.png" alt="Twitter/X"></a>
+  <!-- Main Content Area -->
+  <div class="main-content">
+    <!-- Business Data Section -->
+    <section id="business-data" class="data-block">
+      <div class="data-card">
+        <img src="path/to/your-image.jpg" alt="Data Snapshot" class="data-image">
+        <div class="data-content">
+          <h2>Title of the Dataset</h2>
+          <p>Description of the data, including key insights, source, time period, and how it can be used.</p>
+          <a href="https://drive.google.com/your-shareable-link" target="_blank" class="download-link">📥 Download Dataset</a>
+        </div>
+      </div>
+    </section>
   </div>
-
-  <header>
-    <h1>BFSI Open Data</h1>
-    <p><strong>Insurance & Financial Services Expert | Strategist | Advocate for the Underserved</strong></p>
-  </header>
-
-  <div id="main" class="content">
-    <div class="section">
-      <p><strong>Insurance | Financial data | News | Analysis | Storytelling using Data</strong></p>
-    </div>
-
-    <div class="section">
-      <h2>Why We Exist</h2>
-      <p>
-        Financial services aren’t just about numbers—they’re about people. Whether it’s demystifying the world of insurance and finance for the average Joe or crafting strategies that make sense for everyone from gig workers to CEOs, we are here to make the complex simple and the inaccessible, well… accessible.
-      </p>
-    </div>
-
-    <div class="section">
-      <h2>What We Do</h2>
-      <p>
-        We specialize in creating solutions that protect and empower. Our expertise ranges from underwriting and compliance to risk management and financial product development. But at the heart of it all, we have a simple motto: <strong>serve the underserved</strong>. Because everyone deserves a safety net, even if they can’t afford the ‘premium’ package.
-      </p>
-    </div>
-
-    <div class="section">
-      <h2>What Drives Us</h2>
-      <p>
-        We are on a mission to break down barriers in the financial world, especially for those who’ve been historically overlooked—think gig workers, freelancers, and small business owners or underinformed. These are the people who keep our economy running, and we are dedicated to making sure they have the tools they need to thrive.
-      </p>
-    </div>
-
-    <div class="section">
-      <h2>Let’s Connect</h2>
-      <p>
-        Whether you’re looking to discuss the latest trends in financial services and insurance, explore collaboration opportunities, or just want to chat about how we can make financial services more inclusive, we're just a message away. Let’s work together to build a future where financial security isn’t a privilege, but a right.
-      </p>
-      <p>📧 Reach us at <a href="mailto:compliancedigest1@gmail.com">compliancedigest1@gmail.com</a></p>
-    </div>
-  </div>
-
-  <script>
-    function toggleTheme() {
-      document.body.classList.toggle('dark-theme');
-    }
-  </script>
 </body>
 </html>
