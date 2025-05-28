@@ -144,6 +144,20 @@
     .section {
       margin-bottom: 30px;
     }
+
+    iframe {
+      width: 100%;
+      height: 700px;
+      border: 0;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .disclaimer {
+      font-size: 12px;
+      color: #666;
+      margin-top: 10px;
+    }
   </style>
 </head>
 <body>
@@ -162,18 +176,28 @@
     <a href="https://x.com/compli_d" target="_blank"><img class="social-icon" src="https://cdn-icons-png.flaticon.com/512/733/733579.png" alt="Twitter/X"></a>
   </div>
 
-  
- 
   <header>
-  <h1>BFSI Open Data</h1>
-  <p><strong>Insurance & Financial Services Expert | Strategist | Advocate for the Underserved</strong></p>
-  <a href="data-gallery.html" class="cta-button">📊 Explore Insurance Data →</a>
-  <a href="https://lookerstudio.google.com/u/0/reporting/f5a064c6-ab51-413d-af67-d59e20d452f8/page/D77IF" class="cta-button" target="_blank">📈 View Dashboard →</a>
-</header>
+    <h1>BFSI Open Data</h1>
+    <p><strong>Insurance & Financial Services Expert | Strategist | Advocate for the Underserved</strong></p>
+    <a href="data-gallery.html" class="cta-button">📊 Explore Insurance Data →</a>
+    <a href="https://lookerstudio.google.com/u/0/reporting/f5a064c6-ab51-413d-af67-d59e20d452f8/page/D77IF" class="cta-button" target="_blank">📈 View Dashboard →</a>
+  </header>
 
   <div id="main" class="content">
     <div class="section">
       <p><strong>Insurance | Financial data | News | Analysis | Storytelling using Data</strong></p>
+    </div>
+
+    <div class="section">
+      <h2>General Insurance Dashboard</h2>
+      <p>This dashboard presents an insurer-wise snapshot of gross premium numbers across Motor, Health, and Personal Accident lines. Filter and explore by Year or Insurer.</p>
+      <iframe src="https://lookerstudio.google.com/embed/reporting/b311387f-204c-489a-879d-5f8594c5019e/page/RA7LF"
+              allowfullscreen
+              sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox">
+      </iframe>
+      <p class="disclaimer">
+        <strong>Disclaimer:</strong> The information and visuals presented in this dashboard are compiled from publicly available data sources and are intended for general informational purposes only. BFSI Open Data and its contributors do not guarantee or warrant the data's accuracy, completeness, or fitness for any specific purpose. Users are advised to independently verify all information before acting on it. For official or regulatory use, please consult original filings or professionals.
+      </p>
     </div>
 
     <div class="section">
