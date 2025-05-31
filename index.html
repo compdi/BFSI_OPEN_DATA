@@ -11,6 +11,10 @@
       --text-color: #2c3e50;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body.dark-theme {
       --bg-color: #121212;
       --text-color: #ffffff;
@@ -180,6 +184,7 @@
     <h1>BFSI Open Data</h1>
     <p><strong>Insurance & Financial Services Expert | Strategist | Advocate for the Underserved</strong></p>
     <a href="data-gallery.html" class="cta-button">📊 Explore Insurance Data →</a>
+    <a href="#gi-dashboard" class="cta-button">📈 Explore General Insurance Dashboard →</a>
   </header>
 
   <div id="main" class="content">
@@ -187,7 +192,7 @@
       <p><strong>Insurance | Financial data | News | Analysis | Storytelling using Data</strong></p>
     </div>
 
-    <div class="section">
+    <div class="section" id="gi-dashboard">
       <h2>General Insurance Dashboard</h2>
       <p>This dashboard presents an insurer-wise snapshot of gross premium numbers across Motor, Health, and Personal Accident lines. Filter and explore by Year or Insurer.</p>
       <iframe src="https://lookerstudio.google.com/embed/reporting/b311387f-204c-489a-879d-5f8594c5019e/page/RA7LF"
