@@ -1,7 +1,4 @@
-# Generating the updated index.html with mobile spacing fixes and a tight footer
-from datetime import datetime
-
-index_html = f"""<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
   <title>BFSI Open Data</title>
@@ -13,37 +10,36 @@ index_html = f"""<!DOCTYPE html>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-6DWB0Q3MJB"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
-    function gtag(){{dataLayer.push(arguments);}}
+    function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
     gtag('config', 'G-6DWB0Q3MJB');
   </script>
 
   <style>
-    :root {{
+    :root {
       --bg-color: #ffffff;
       --text-color: #2c3e50;
-    }}
+    }
 
-    html {{
+    html {
       scroll-behavior: smooth;
-    }}
+    }
 
-    body.dark-theme {{
+    body.dark-theme {
       --bg-color: #121212;
       --text-color: #ffffff;
-    }}
+    }
 
-    body {{
+    body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      line-height: 1.7;
       margin: 0;
       padding: 0;
       background-color: var(--bg-color);
       color: var(--text-color);
       transition: background-color 0.3s, color 0.3s;
-    }}
+    }
 
-    .navbar {{
+    .navbar {
       position: absolute;
       top: 0;
       left: 0;
@@ -53,39 +49,36 @@ index_html = f"""<!DOCTYPE html>
       align-items: center;
       padding: 10px 20px;
       z-index: 2;
-    }}
+    }
 
-    .navbar img {{
+    .navbar img {
       height: 110px;
       background: white;
       padding: 10px;
       border-radius: 10px;
       box-shadow: 0 0 8px rgba(0,0,0,0.2);
-    }}
+    }
 
-    .navbar-right {{
-      display: flex;
-      align-items: center;
-      gap: 10px;
+    .navbar-right {
       margin-right: 20px;
-    }}
+    }
 
-    .theme-toggle {{
+    .theme-toggle {
       padding: 6px 12px;
       background: #fff;
       border: 1px solid #ccc;
       border-radius: 4px;
       cursor: pointer;
       font-size: 0.9em;
-    }}
+    }
 
-    body.dark-theme .theme-toggle {{
+    body.dark-theme .theme-toggle {
       background: #333;
       color: #fff;
       border-color: #666;
-    }}
+    }
 
-    .social-floating {{
+    .social-floating {
       position: fixed;
       bottom: 20px;
       right: 20px;
@@ -93,31 +86,30 @@ index_html = f"""<!DOCTYPE html>
       flex-direction: column;
       gap: 10px;
       z-index: 999;
-    }}
+    }
 
-    .social-icon {{
+    .social-icon {
       width: 40px;
       height: 40px;
-    }}
+    }
 
-    header {{
+    header {
       background-color: transparent;
-      padding: 80px 20px 60px;
+      padding: 80px 20px 40px;
       text-align: center;
-    }}
+    }
 
-    header h1 {{
-      font-size: 7em;
-      font-weight: bold;
+    header h1 {
+      font-size: 3.5em;
       margin-bottom: 10px;
-    }}
+    }
 
-    header p {{
+    header p {
       font-size: 1.1em;
       margin: 0 auto;
-    }}
+    }
 
-    .cta-button {{
+    .cta-button {
       display: inline-block;
       margin-top: 25px;
       padding: 12px 20px;
@@ -127,109 +119,98 @@ index_html = f"""<!DOCTYPE html>
       text-decoration: none;
       border-radius: 8px;
       transition: background-color 0.3s;
-    }}
+    }
 
-    .cta-button:hover {{
+    .cta-button:hover {
       background-color: #005fa3;
-    }}
+    }
 
-    .content {{
+    .content {
       max-width: 850px;
-      margin: 40px auto;
+      margin: 20px auto;
       padding: 0 20px;
-    }}
+    }
 
-    h2 {{
+    h2 {
       color: var(--text-color);
-    }}
+    }
 
-    a {{
+    a {
       color: #0077cc;
       text-decoration: none;
-    }}
+    }
 
-    a:hover {{
+    a:hover {
       text-decoration: underline;
-    }}
+    }
 
-    .section {{
-      margin-bottom: 30px;
-    }}
+    .section {
+      margin-bottom: 20px;
+    }
 
-    iframe {{
+    iframe {
       width: 100%;
       height: 700px;
       border: 0;
       border-radius: 8px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      margin-bottom: 20px;
-    }}
+      margin-bottom: 10px;
+    }
 
-    .disclaimer {{
+    .disclaimer {
       font-size: 12px;
       color: #666;
-      margin-top: 10px;
-    }}
+      margin-top: 5px;
+    }
 
-    footer {{
+    footer {
       text-align: center;
       font-size: 0.8em;
       color: #999;
       padding: 10px 0;
       margin-top: 10px;
-    }}
+    }
 
-    @media only screen and (max-width: 768px) {{
-      header h1 {{
-        font-size: 2.8em;
-      }}
+    @media only screen and (max-width: 768px) {
+      header h1 {
+        font-size: 2.2em;
+      }
 
-      header p {{
+      .cta-button {
         font-size: 1em;
-        padding: 0 10px;
-      }}
+        padding: 10px 16px;
+      }
 
-      .cta-button {{
-        font-size: 0.95em;
-        padding: 10px 15px;
-        margin-top: 15px;
-      }}
-
-      iframe {{
+      iframe {
         height: 450px;
         margin-bottom: 10px;
-      }}
+      }
 
-      .navbar img {{
+      .navbar img {
         height: 80px;
-      }}
+      }
 
-      .navbar {{
+      .navbar {
         padding: 6px 12px;
-      }}
+      }
 
-      .navbar-right {{
+      .navbar-right {
         margin-right: 10px;
-      }}
+      }
 
-      .social-floating {{
-        bottom: 15px;
-        right: 10px;
-      }}
-
-      .social-icon {{
+      .social-icon {
         width: 30px;
         height: 30px;
-      }}
+      }
 
-      .content {{
+      .content {
         padding: 0 10px;
-      }}
+      }
 
-      .section {{
+      .section {
         margin-bottom: 15px;
-      }}
-    }}
+      }
+    }
   </style>
 </head>
 <body>
@@ -268,27 +249,18 @@ index_html = f"""<!DOCTYPE html>
 
     <div class="section">
       <h2>Let’s Connect</h2>
-      <p>Whether you’re looking to explore collaboration opportunities or just want to chat about data-driven change in financial services, we're just a message away.</p>
-      <p>📧 <a href="mailto:bfsiopendata@gmail.com">bfsiopendata@gmail.com</a></p>
+      <p>Reach out to collaborate or discuss ideas. 📧 <a href="mailto:bfsiopendata@gmail.com">bfsiopendata@gmail.com</a></p>
     </div>
   </div>
 
   <footer>
-    &copy; {datetime.now().year} BFSI Open Data · All rights reserved
+    &copy; 2025 BFSI Open Data · All rights reserved
   </footer>
 
   <script>
-    function toggleTheme() {{
+    function toggleTheme() {
       document.body.classList.toggle('dark-theme');
-    }}
+    }
   </script>
 </body>
 </html>
-"""
-
-# Saving to a file for user to download
-with open("/mnt/data/index_mobile_final.html", "w") as file:
-    file.write(index_html)
-
-"/mnt/data/index_mobile_final.html"
-
