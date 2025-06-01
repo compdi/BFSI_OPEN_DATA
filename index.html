@@ -1,4 +1,7 @@
-<!DOCTYPE html>
+# Generating the updated index.html with mobile spacing fixes and a tight footer
+from datetime import datetime
+
+index_html = f"""<!DOCTYPE html>
 <html>
 <head>
   <title>BFSI Open Data</title>
@@ -10,27 +13,27 @@
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-6DWB0Q3MJB"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
+    function gtag(){{dataLayer.push(arguments);}}
     gtag('js', new Date());
     gtag('config', 'G-6DWB0Q3MJB');
   </script>
 
   <style>
-    :root {
+    :root {{
       --bg-color: #ffffff;
       --text-color: #2c3e50;
-    }
+    }}
 
-    html {
+    html {{
       scroll-behavior: smooth;
-    }
+    }}
 
-    body.dark-theme {
+    body.dark-theme {{
       --bg-color: #121212;
       --text-color: #ffffff;
-    }
+    }}
 
-    body {
+    body {{
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       line-height: 1.7;
       margin: 0;
@@ -38,9 +41,9 @@
       background-color: var(--bg-color);
       color: var(--text-color);
       transition: background-color 0.3s, color 0.3s;
-    }
+    }}
 
-    .navbar {
+    .navbar {{
       position: absolute;
       top: 0;
       left: 0;
@@ -50,39 +53,39 @@
       align-items: center;
       padding: 10px 20px;
       z-index: 2;
-    }
+    }}
 
-    .navbar img {
+    .navbar img {{
       height: 110px;
       background: white;
       padding: 10px;
       border-radius: 10px;
       box-shadow: 0 0 8px rgba(0,0,0,0.2);
-    }
+    }}
 
-    .navbar-right {
+    .navbar-right {{
       display: flex;
       align-items: center;
       gap: 10px;
       margin-right: 20px;
-    }
+    }}
 
-    .theme-toggle {
+    .theme-toggle {{
       padding: 6px 12px;
       background: #fff;
       border: 1px solid #ccc;
       border-radius: 4px;
       cursor: pointer;
       font-size: 0.9em;
-    }
+    }}
 
-    body.dark-theme .theme-toggle {
+    body.dark-theme .theme-toggle {{
       background: #333;
       color: #fff;
       border-color: #666;
-    }
+    }}
 
-    .social-floating {
+    .social-floating {{
       position: fixed;
       bottom: 20px;
       right: 20px;
@@ -90,31 +93,31 @@
       flex-direction: column;
       gap: 10px;
       z-index: 999;
-    }
+    }}
 
-    .social-icon {
+    .social-icon {{
       width: 40px;
       height: 40px;
-    }
+    }}
 
-    header {
+    header {{
       background-color: transparent;
       padding: 80px 20px 60px;
       text-align: center;
-    }
+    }}
 
-    header h1 {
+    header h1 {{
       font-size: 7em;
       font-weight: bold;
       margin-bottom: 10px;
-    }
+    }}
 
-    header p {
+    header p {{
       font-size: 1.1em;
       margin: 0 auto;
-    }
+    }}
 
-    .cta-button {
+    .cta-button {{
       display: inline-block;
       margin-top: 25px;
       padding: 12px 20px;
@@ -124,110 +127,114 @@
       text-decoration: none;
       border-radius: 8px;
       transition: background-color 0.3s;
-    }
+    }}
 
-    .cta-button:hover {
+    .cta-button:hover {{
       background-color: #005fa3;
-    }
+    }}
 
-    .content {
+    .content {{
       max-width: 850px;
       margin: 40px auto;
       padding: 0 20px;
-    }
+    }}
 
-    h2 {
+    h2 {{
       color: var(--text-color);
-    }
+    }}
 
-    .highlight {
-      background: #e1f5fe;
-      padding: 4px 8px;
-      border-radius: 5px;
-      display: inline-block;
-    }
-
-    a {
+    a {{
       color: #0077cc;
       text-decoration: none;
-    }
+    }}
 
-    a:hover {
+    a:hover {{
       text-decoration: underline;
-    }
+    }}
 
-    .section {
+    .section {{
       margin-bottom: 30px;
-    }
+    }}
 
-    iframe {
+    iframe {{
       width: 100%;
       height: 700px;
       border: 0;
       border-radius: 8px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
+      margin-bottom: 20px;
+    }}
 
-    .disclaimer {
+    .disclaimer {{
       font-size: 12px;
       color: #666;
       margin-top: 10px;
-    }
+    }}
 
-    /* ✅ Mobile Optimization */
-    @media only screen and (max-width: 768px) {
-      header h1 {
+    footer {{
+      text-align: center;
+      font-size: 0.8em;
+      color: #999;
+      padding: 10px 0;
+      margin-top: 10px;
+    }}
+
+    @media only screen and (max-width: 768px) {{
+      header h1 {{
         font-size: 2.8em;
-      }
+      }}
 
-      header p {
+      header p {{
         font-size: 1em;
         padding: 0 10px;
-      }
+      }}
 
-      .cta-button {
+      .cta-button {{
         font-size: 0.95em;
         padding: 10px 15px;
         margin-top: 15px;
-      }
+      }}
 
-      iframe {
+      iframe {{
         height: 450px;
-      }
+        margin-bottom: 10px;
+      }}
 
-      .navbar img {
+      .navbar img {{
         height: 80px;
-      }
+      }}
 
-      .navbar {
+      .navbar {{
         padding: 6px 12px;
-      }
+      }}
 
-      .navbar-right {
+      .navbar-right {{
         margin-right: 10px;
-      }
+      }}
 
-      .social-floating {
+      .social-floating {{
         bottom: 15px;
         right: 10px;
-      }
+      }}
 
-      .social-icon {
+      .social-icon {{
         width: 30px;
         height: 30px;
-      }
+      }}
 
-      .content {
+      .content {{
         padding: 0 10px;
-      }
-    }
+      }}
+
+      .section {{
+        margin-bottom: 15px;
+      }}
+    }}
   </style>
 </head>
 <body>
   <div class="navbar">
-    <a href="/">
-      <img src="Logo.png" alt="BFSI Open Data Logo">
-    </a>
+    <a href="/"><img src="Logo.png" alt="BFSI Open Data Logo"></a>
     <div class="navbar-right">
       <button class="theme-toggle" onclick="toggleTheme()">Toggle Theme</button>
     </div>
@@ -254,48 +261,34 @@
       <h2>General Insurance Dashboard</h2>
       <p>This dashboard presents an insurer-wise snapshot of gross premium numbers across Motor, Health, and Personal Accident lines. Filter and explore by Year or Insurer.</p>
       <iframe src="https://lookerstudio.google.com/embed/reporting/b311387f-204c-489a-879d-5f8594c5019e/page/RA7LF"
-              allowfullscreen
-              sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox">
+              allowfullscreen sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox">
       </iframe>
-      <p class="disclaimer">
-        <strong>Disclaimer:</strong> The information and visuals presented in this dashboard are compiled from publicly available data sources and are intended for general informational purposes only. BFSI Open Data and its contributors do not guarantee or warrant the data's accuracy, completeness, or fitness for any specific purpose. Users are advised to independently verify all information before acting on it. For official or regulatory use, please consult original filings or professionals.
-      </p>
-    </div>
-
-    <div class="section">
-      <h2>Why We Exist</h2>
-      <p>
-        Financial services aren’t just about numbers—they’re about people. Whether it’s demystifying the world of insurance and finance for the average Joe or crafting strategies that make sense for everyone from gig workers to CEOs, we are here to make the complex simple and the inaccessible, well… accessible.
-      </p>
-    </div>
-
-    <div class="section">
-      <h2>What We Do</h2>
-      <p>
-        We specialize in creating solutions that protect and empower. Our expertise ranges from underwriting and compliance to risk management and financial product development. But at the heart of it all, we have a simple motto: <strong>serve the underserved</strong>. Because everyone deserves a safety net, even if they can’t afford the ‘premium’ package.
-      </p>
-    </div>
-
-    <div class="section">
-      <h2>What Drives Us</h2>
-      <p>
-        We are on a mission to break down barriers in the financial world, especially for those who’ve been historically overlooked—think gig workers, freelancers, and small business owners or underinformed. These are the people who keep our economy running, and we are dedicated to making sure they have the tools they need to thrive.
-      </p>
+      <p class="disclaimer"><strong>Disclaimer:</strong> The information and visuals presented in this dashboard are compiled from publicly available data sources and are intended for general informational purposes only.</p>
     </div>
 
     <div class="section">
       <h2>Let’s Connect</h2>
-      <p>
-        Whether you’re looking to discuss the latest trends in financial services and insurance, explore collaboration opportunities, or just want to chat about how we can make financial services more inclusive, we're just a message away. Let’s work together to build a future where financial security isn’t a privilege, but a right.
-      </p>
-      <p>📧 Reach us at <a href="mailto:bfsiopendata@gmail.com">bfsiopendata@gmail.com</a></p>
+      <p>Whether you’re looking to explore collaboration opportunities or just want to chat about data-driven change in financial services, we're just a message away.</p>
+      <p>📧 <a href="mailto:bfsiopendata@gmail.com">bfsiopendata@gmail.com</a></p>
     </div>
   </div>
 
+  <footer>
+    &copy; {datetime.now().year} BFSI Open Data · All rights reserved
+  </footer>
+
   <script>
-    function toggleTheme() {
+    function toggleTheme() {{
       document.body.classList.toggle('dark-theme');
-    }
+    }}
   </script>
 </body>
 </html>
+"""
+
+# Saving to a file for user to download
+with open("/mnt/data/index_mobile_final.html", "w") as file:
+    file.write(index_html)
+
+"/mnt/data/index_mobile_final.html"
+
