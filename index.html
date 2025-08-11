@@ -209,4 +209,176 @@
             </div>
             <div class="bc-field">
               <label>PIN</label>
-              <input id="bc-pin" type="text" inputmode="numeric" pattern="
+              <input id="bc-pin" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="6" placeholder="6-digit">
+            </div>
+          </div>
+
+          <div class="bc-actions">
+            <button id="bc-search">Search</button>
+            <button id="bc-clear" class="ghost">Clear</button>
+          </div>
+
+          <div id="bc-meta" class="bc-meta"></div>
+
+          <div class="bc-table-wrap">
+            <table class="bc-table" aria-label="Blacklisted hospitals search results">
+              <thead>
+                <tr>
+                  <th>Hospital</th>
+                  <th>Company</th>
+                  <th>City</th>
+                  <th>State</th>
+                  <th>PIN</th>
+                  <th>Address</th>
+                </tr>
+              </thead>
+              <tbody id="bc-tbody"></tbody>
+            </table>
+          </div>
+
+          <div class="bc-pagination">
+            <button id="bc-prev" disabled>Prev</button>
+            <span id="bc-pageinfo">Page 1</span>
+            <button id="bc-next" disabled>Next</button>
+          </div>
+
+          <p class="bc-note">Search-only view. Bulk export disabled.</p>
+        </div>
+      </aside>
+
+      <!-- RIGHT: your existing BFSI sections unchanged -->
+      <main class="bc-right">
+        <div class="section">
+          <p><strong>Insurance | Financial data | News | Analysis | Storytelling using Data</strong></p>
+        </div>
+
+        <div class="section" id="gi-dashboard">
+          <h2>General Insurance Dashboard</h2>
+          <p>This dashboard presents an insurer-wise snapshot of gross premium numbers across Motor, Health, and Personal Accident lines. Filter and explore by Year or Insurer.</p>
+          <iframe src="https://lookerstudio.google.com/embed/reporting/b311387f-204c-489a-879d-5f8594c5019e/page/RA7LF"
+                  allowfullscreen sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox">
+          </iframe>
+          <p class="disclaimer"><strong>Disclaimer:</strong> The information and visuals presented in this dashboard are compiled from publicly available data sources and are intended for general informational purposes only.</p>
+        </div>
+
+        <div class="section">
+          <h2>Let’s Connect</h2>
+          <p>Reach out to collaborate or discuss ideas. 📧 <a href="mailto:bfsiopendata@gmail.com">bfsiopendata@gmail.com</a></p>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <footer>
+    &copy; 2025 BFSI Open Data · All rights reserved
+  </footer>
+
+  <script>
+    function toggleTheme() {
+      document.body.classList.toggle('dark-theme');
+    }
+  </script>
+
+  <!-- Search widget logic -->
+  <script>
+  (function(){
+    const API = 'https://script.google.com/macros/s/AKfycbz-AndCEBjN36GZnfrqL6XEKoY9UhG4m7_-cwM_27Hh95Yo5RkSg2kQPFRTSOpPLcXg/exec';
+
+    const els = {
+      q:       document.getElementById('bc-q'),
+      company: document.getElementById('bc-company'),
+      state:   document.getElementById('bc-state'),
+      city:    document.getElementById('bc-city'),
+      pin:     document.getElementById('bc-pin'),
+      search:  document.getElementById('bc-search'),
+      clear:   document.getElementById('bc-clear'),
+      tbody:   document.getElementById('bc-tbody'),
+      meta:    document.getElementById('bc-meta'),
+      prev:    document.getElementById('bc-prev'),
+      next:    document.getElementById('bc-next'),
+      pageinfo:document.getElementById('bc-pageinfo')
+    };
+
+    let page = 1;
+    const pageSize = 10;
+    let total = 0;
+
+    function params() {
+      const p = new URLSearchParams();
+      const v = (x)=> (x||'').trim();
+      if (v(els.q.value))       p.set('q', v(els.q.value));
+      if (v(els.company.value)) p.set('company', v(els.company.value));
+      if (v(els.state.value))   p.set('state', v(els.state.value));
+      if (v(els.city.value))    p.set('city', v(els.city.value));
+      if (v(els.pin.value))     p.set('pin', v(els.pin.value));
+      p.set('page', page);
+      p.set('pageSize', pageSize);
+      return p.toString();
+    }
+
+    async function runSearch() {
+      const cols = 6;
+      els.tbody.innerHTML = `<tr><td colspan="${cols}">Searching…</td></tr>`;
+      try {
+        const res = await fetch(`${API}?${params()}`);
+        const data = await res.json();
+
+        if (data.error) {
+          els.meta.textContent = data.error;
+          els.tbody.innerHTML = '';
+          total = 0;
+          updatePager();
+          return;
+        }
+
+        total = data.total || 0;
+        const rows = data.results || [];
+        els.meta.textContent = `${total} result${total===1?'':'s'} found`;
+        els.tbody.innerHTML = rows.map(r => `
+          <tr>
+            <td>${escapeHtml(r.hospital || '')}</td>
+            <td>${escapeHtml(r.company || '')}</td>
+            <td>${escapeHtml(r.city || '')}</td>
+            <td>${escapeHtml(r.state || '')}</td>
+            <td>${escapeHtml(r.pin || '')}</td>
+            <td>${escapeHtml(r.address || '')}</td>
+          </tr>
+        `).join('') || `<tr><td colspan="${cols}">No results</td></tr>`;
+        updatePager();
+      } catch (e) {
+        els.meta.textContent = 'Network error. Try again.';
+        els.tbody.innerHTML = '';
+        total = 0;
+        updatePager();
+      }
+    }
+
+    function escapeHtml(s) {
+      return (s+'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    }
+
+    function updatePager() {
+      const pages = Math.max(1, Math.ceil(total / pageSize));
+      els.pageinfo.textContent = `Page ${page} of ${pages}`;
+      els.prev.disabled = (page <= 1);
+      els.next.disabled = (page >= pages);
+    }
+
+    function clearAll() {
+      els.q.value = els.company.value = els.state.value = els.city.value = els.pin.value = '';
+      page = 1;
+      els.meta.textContent = '';
+      els.tbody.innerHTML = '';
+      updatePager();
+    }
+
+    let t;
+    els.q.addEventListener('input', () => { page = 1; clearTimeout(t); t = setTimeout(runSearch, 350); });
+    els.search.addEventListener('click', () => { page = 1; runSearch(); });
+    els.clear.addEventListener('click', clearAll);
+    els.prev.addEventListener('click', () => { if (page>1){ page--; runSearch(); } });
+    els.next.addEventListener('click', () => { page++; runSearch(); });
+  })();
+  </script>
+</body>
+</html>
