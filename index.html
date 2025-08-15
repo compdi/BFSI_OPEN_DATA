@@ -5,274 +5,115 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Data essays, dashboards, and storytelling from the Indian BFSI world. Built by experts, designed for the underserved.">
-
-  <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-6DWB0Q3MJB"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date()); gtag('config', 'G-6DWB0Q3MJB');
-  </script>
-
   <style>
-    :root {
-      --bg-color: #ffffff; --text-color: #2c3e50;
-      --card-bg: #ffffff; --card-border: #e7e7e7; --muted: #666;
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0; padding: 0;
+      background: #f4f4f4; color: #333;
     }
-    html { scroll-behavior: smooth; }
-    body.dark-theme { --bg-color:#121212; --text-color:#ffffff; --card-bg:#1b1b1b; --card-border:#2a2a2a; --muted:#aaa; }
-    body { font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin:0; background:var(--bg-color); color:var(--text-color); }
-
-    /* Navbar */
-    .navbar { position:absolute; top:0; left:0; width:100%; display:flex; justify-content:space-between; align-items:center; padding:10px 20px; z-index:2; }
-    .navbar img { height:110px; background:#fff; padding:10px; border-radius:10px; box-shadow:0 0 8px rgba(0,0,0,.2); }
-    .navbar-right { margin-right:20px; }
-    .theme-toggle { padding:6px 12px; background:#fff; border:1px solid #ccc; border-radius:4px; cursor:pointer; font-size:.9em; }
-    body.dark-theme .theme-toggle { background:#333; color:#fff; border-color:#666; }
-
-    /* Floating socials */
-    .social-floating { position:fixed; bottom:20px; right:20px; display:flex; flex-direction:column; gap:10px; z-index:999; }
-    .social-icon { width:40px; height:40px; }
-
-    /* Header */
-    header { background:transparent; padding:80px 20px 40px; text-align:center; }
-    header h1 { font-size:3.5em; margin-bottom:10px; }
-    header p { font-size:1.1em; margin:0 auto; }
-    .cta-button { display:inline-block; margin-top:25px; padding:12px 20px; background:#0077cc; color:#fff; font-weight:bold; text-decoration:none; border-radius:8px; }
-    .cta-button:hover { background:#005fa3; }
-
-    /* Main */
-    .content { max-width:1200px; margin:20px auto; padding:0 20px; }
-    .bc-layout { display:grid; grid-template-columns:360px 1fr; gap:16px; align-items:start; }
-    @media (max-width:960px){ .bc-layout{ grid-template-columns:1fr; } }
-
-    /* Left card (search) */
-    .bc-left { position:sticky; top:12px; }
-    .bc-card { background:var(--card-bg); border:1px solid var(--card-border); border-radius:14px; padding:14px; box-shadow:0 1px 4px rgba(0,0,0,.04); }
-    .bc-title { margin:0 0 10px; font-size:18px; }
-    .bc-field { margin-bottom:10px; }
-    .bc-field label { display:block; font-size:12px; opacity:.8; margin-bottom:4px; }
-    .bc-field input { width:100%; padding:8px; border:1px solid #d8d8d8; border-radius:8px; background:var(--bg-color); color:var(--text-color); }
-    .bc-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
-    .bc-actions { display:flex; gap:8px; margin:8px 0 6px; }
-    .bc-actions button { padding:8px 12px; border-radius:10px; border:1px solid #bbb; background:#f8f8f8; cursor:pointer; }
-    .bc-actions .ghost { background:transparent; }
-    .bc-meta { font-size:12px; opacity:.8; margin:4px 0 8px; min-height:16px; }
-    .bc-table-wrap { border:1px solid #eee; border-radius:10px; overflow:auto; }
-    .bc-table { width:100%; border-collapse:collapse; table-layout:fixed; user-select:none; }
-    .bc-table th, .bc-table td { border-bottom:1px solid #f0f0f0; padding:8px; vertical-align:top; }
-    .bc-table th { text-align:left; font-size:12px; opacity:.7; }
-    .bc-table td { font-size:13px; }
-    .bc-pagination { display:flex; align-items:center; gap:10px; justify-content:center; padding:8px 0; }
-    .bc-note { font-size:12px; opacity:.7; margin-top:8px; }
-
-    /* Right side */
-    .section { margin-bottom:20px; }
-    h2 { color:var(--text-color); }
-    a { color:#0077cc; text-decoration:none; } a:hover { text-decoration:underline; }
-    iframe { width:100%; height:700px; border:0; border-radius:8px; box-shadow:0 0 10px rgba(0,0,0,.1); margin-bottom:10px; }
-    .disclaimer { font-size:12px; color:var(--muted); margin-top:5px; }
-
-    footer { text-align:center; font-size:.8em; color:#999; padding:10px 0; margin-top:10px; }
-
-    /* Mobile tweaks */
-    @media (max-width:768px){
-      header h1{font-size:2.2em;} .cta-button{font-size:1em; padding:10px 16px;}
-      iframe{height:450px; margin-bottom:10px;}
-      .navbar img{height:80px;} .navbar{padding:6px 12px;} .navbar-right{margin-right:10px;}
-      .social-icon{width:30px; height:30px;} .content{padding:0 10px;} .section{margin-bottom:15px;}
+    header { padding: 20px; background: #0077cc; color: white; text-align: center; }
+    h1 { margin: 0; }
+    .content { max-width: 1000px; margin: 20px auto; padding: 20px; background: white; border-radius: 8px; }
+    label { display: block; margin-top: 10px; font-weight: bold; }
+    input[type="text"] {
+      width: 100%; padding: 8px; margin-top: 4px; border: 1px solid #ccc; border-radius: 4px;
     }
+    button {
+      margin-top: 15px; padding: 10px 20px;
+      background: #0077cc; color: white; border: none; border-radius: 4px; cursor: pointer;
+    }
+    button:hover { background: #005fa3; }
+    table {
+      width: 100%; margin-top: 20px;
+      border-collapse: collapse;
+    }
+    th, td {
+      padding: 10px; border-bottom: 1px solid #ccc;
+    }
+    th { background: #f2f2f2; text-align: left; }
+    .note { margin-top: 10px; font-size: 0.9em; color: #777; }
   </style>
 </head>
 <body>
-  <!-- Navbar -->
-  <div class="navbar">
-    <a href="/"><img src="Logo.png" alt="BFSI Open Data Logo"></a>
-    <div class="navbar-right"><button class="theme-toggle" onclick="document.body.classList.toggle('dark-theme')">Toggle Theme</button></div>
-  </div>
 
-  <!-- Floating social -->
-  <div class="social-floating">
-    <a href="https://www.linkedin.com/company/bfsi-open-data/?viewAsMember=true" target="_blank"><img class="social-icon" src="https://cdn-icons-png.flaticon.com/512/145/145807.png" alt="LinkedIn"></a>
-    <a href="https://www.instagram.com/bfsi_open_data/" target="_blank"><img class="social-icon" src="https://cdn-icons-png.flaticon.com/512/174/174855.png" alt="Instagram"></a>
-    <a href="https://x.com/bfsiopendata" target="_blank"><img class="social-icon" src="https://cdn-icons-png.flaticon.com/512/733/733579.png" alt="Twitter/X"></a>
-  </div>
-
-  <!-- Hero -->
   <header>
-    <h1>BFSI Open Data</h1>
-    <p><strong>Insurance & Financial Services Expert | Strategist | Advocate for the Underserved</strong></p>
-    <a href="#gi-dashboard" class="cta-button">📈 Explore General Insurance Dashboard →</a>
+    <h1>Blacklisted / Delisted Hospitals</h1>
+    <p>Powered by BFSI Open Data</p>
   </header>
 
-  <!-- Main two-column area -->
-  <div id="main" class="content">
-    <div class="bc-layout">
-      <!-- LEFT: Blacklisted/Delisted Hospitals search -->
-      <aside class="bc-left">
-        <div class="bc-card">
-          <h3 class="bc-title">Blacklisted / Delisted Hospitals</h3>
+  <div class="content">
+    <label for="search">Search (Hospital, Company, City, State, PIN)</label>
+    <input type="text" id="search" placeholder="e.g., Fortis, Star, Pune">
 
-          <div class="bc-field">
-            <label>Search (min 3 chars)</label>
-            <input data-id="searchAll" type="text" placeholder="Hospital, company, city, state, PIN" autocomplete="off">
-          </div>
+    <button onclick="runSearch()">Search</button>
+    <button onclick="resetSearch()" style="background:#999;margin-left:10px;">Clear</button>
 
-          <div class="bc-grid">
-            <div class="bc-field">
-              <label>Company</label>
-              <input data-id="company" type="text" placeholder="e.g., Star, Niva">
-            </div>
-            <div class="bc-field">
-              <label>State</label>
-              <input data-id="state" type="text" placeholder="Exact (e.g., Maharashtra)">
-            </div>
-            <div class="bc-field">
-              <label>City</label>
-              <input data-id="city" type="text" placeholder="Exact (e.g., Pune)">
-            </div>
-            <div class="bc-field">
-              <label>PIN</label>
-              <input data-id="pin" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="6" placeholder="6-digit">
-            </div>
-          </div>
+    <table id="results">
+      <thead>
+        <tr>
+          <th>Hospital</th>
+          <th>Company</th>
+          <th>City</th>
+          <th>State</th>
+          <th>PIN</th>
+          <th>Address</th>
+        </tr>
+      </thead>
+      <tbody id="table-body">
+        <tr><td colspan="6">No results yet</td></tr>
+      </tbody>
+    </table>
 
-          <div class="bc-actions">
-            <button data-id="doSearch">Search</button>
-            <button data-id="doClear" class="ghost">Clear</button>
-          </div>
-
-          <div class="bc-meta net-msg" data-id="netMsg"></div>
-
-          <div class="bc-table-wrap">
-            <table class="bc-table" aria-label="Blacklisted hospitals search results">
-              <thead>
-                <tr>
-                  <th>Hospital</th><th>Company</th><th>City</th><th>State</th><th>PIN</th><th>Address</th>
-                </tr>
-              </thead>
-              <tbody data-id="tbody"></tbody>
-            </table>
-          </div>
-
-          <div class="bc-pagination" data-id="pager"></div>
-          <p class="bc-note">Search-only view. Bulk export disabled.</p>
-        </div>
-      </aside>
-
-      <!-- RIGHT: BFSI sections -->
-      <main class="bc-right">
-        <div class="section"><p><strong>Insurance | Financial data | News | Analysis | Storytelling using Data</strong></p></div>
-
-        <div class="section" id="gi-dashboard">
-          <h2>General Insurance Dashboard</h2>
-          <p>This dashboard presents an insurer-wise snapshot of gross premium numbers across Motor, Health, and Personal Accident lines. Filter and explore by Year or Insurer.</p>
-          <iframe src="https://lookerstudio.google.com/embed/reporting/b311387f-204c-489a-879d-5f8594c5019e/page/RA7LF"
-            allowfullscreen sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
-          <p class="disclaimer"><strong>Disclaimer:</strong> The information and visuals presented in this dashboard are compiled from publicly available data sources and are intended for general informational purposes only.</p>
-        </div>
-
-        <div class="section">
-          <h2>Let’s Connect</h2>
-          <p>Reach out to collaborate or discuss ideas. 📧 <a href="mailto:bfsiopendata@gmail.com">bfsiopendata@gmail.com</a></p>
-        </div>
-      </main>
-    </div>
+    <p class="note">Only search view. Bulk download is disabled.</p>
   </div>
 
-  <footer>&copy; 2025 BFSI Open Data · All rights reserved</footer>
-
-  <!-- Search widget logic (gviz, client-side filtering) -->
   <script>
-  (function () {
-    // --------- SETTINGS ----------
-    const SHEET_ID   = "1g-98WEqa92aIREpqmSxbIiHrFL-OtedJNFOhDGGvGFw";
-    const SHEET_NAME = "Hospitals"; // must match tab name exactly
-    const GVIZ = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(SHEET_NAME)}&tq=${encodeURIComponent('select *')}`;
-    const PAGE_SIZE = 20;
+    const API_URL = 'https://script.google.com/macros/s/AKfycbxDN_LStQzUq9kWn3_1m3pUrOgYYpDP49VEy3_m8Xz0tk0IV5tJ6-OCWFGsME2XVC2s/exec';
 
-    // --------- STATE ----------
-    let DATA = [];      // all rows, mapped as objects
-    let PAGE = 1;
+    let allData = [];
 
-    // --------- DOM ----------
-    const els = {
-      searchAll: document.querySelector('[data-id="searchAll"]'),
-      company:   document.querySelector('[data-id="company"]'),
-      state:     document.querySelector('[data-id="state"]'),
-      city:      document.querySelector('[data-id="city"]'),
-      pin:       document.querySelector('[data-id="pin"]'),
-      doSearch:  document.querySelector('[data-id="doSearch"]'),
-      doClear:   document.querySelector('[data-id="doClear"]'),
-      msg:       document.querySelector('[data-id="netMsg"]'),
-      tbody:     document.querySelector('[data-id="tbody"]'),
-      pager:     document.querySelector('[data-id="pager"]')
-    };
-
-    function showMsg(text){ if(els.msg) els.msg.textContent = text || ''; }
-
-    function parseGviz(text) {
-      // text is like: google.visualization.Query.setResponse({...});
-      const json = JSON.parse(text.substring(text.indexOf('{'), text.lastIndexOf(')')));
-      const cols = json.table.cols.map(c => (c.label || c.id || '').trim());
-      return json.table.rows.map(r => {
-        const obj = {};
-        cols.forEach((k,i)=> obj[k || ('col'+i)] = (r.c[i] && r.c[i].v!=null) ? r.c[i].v : '');
-        return obj;
-      });
-    }
-
-    async function load() {
+    async function fetchData() {
       try {
-        showMsg('Loading…');
-        const res = await fetch(GVIZ, { cache: 'no-store' });
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        const text = await res.text();
-        DATA = parseGviz(text);
-        showMsg(''); PAGE = 1; render(filter());
-      } catch (e) {
-        console.error(e); showMsg('Network error. Check sheet sharing & tab name.');
+        const res = await fetch(API_URL);
+        const json = await res.json();
+        allData = json.data || [];
+      } catch (err) {
+        console.error("Fetch error:", err);
+        document.getElementById("table-body").innerHTML = `<tr><td colspan="6">Failed to load data</td></tr>`;
       }
     }
 
-    function field(row, key){ return (row[key] || '').toString(); }
+    function runSearch() {
+      const q = document.getElementById('search').value.toLowerCase();
+      const filtered = allData.filter(row => {
+        return Object.values(row).some(val => val.toLowerCase().includes(q));
+      });
 
-    function filter() {
-      const q = (els.searchAll.value || '').trim().toLowerCase();
-      const company = (els.company.value || '').trim().toLowerCase();
-      const state   = (els.state.value || '').trim().toLowerCase();
-      const city    = (els.city.value || '').trim().toLowerCase();
-      const pin     = (els.pin.value || '').trim();
-
-      let out = DATA;
-
-      // global search (min 3 chars)
-      if (q.length >= 3) {
-        out = out.filter(r => (
-          `${field(r,'Hospital Name')} ${field(r,'Company Name')} ${field(r,'Address')} ${field(r,'State')} ${field(r,'City/Place')} ${field(r,'Pin Code')} ${field(r,'Source')}`
-          .toLowerCase()
-        ).includes(q));
+      const body = document.getElementById("table-body");
+      if (filtered.length === 0) {
+        body.innerHTML = `<tr><td colspan="6">No results found</td></tr>`;
+        return;
       }
 
-      if (company) out = out.filter(r => field(r,'Company Name').toLowerCase().includes(company));
-      if (state)   out = out.filter(r => field(r,'State').toLowerCase() === state);
-      if (city)    out = out.filter(r => field(r,'City/Place').toLowerCase() === city);
-      if (pin)     out = out.filter(r => field(r,'Pin Code').toString().startsWith(pin));
-
-      return out;
-    }
-
-    function esc(s){ return (s+'').replace(/[&<>"']/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;'}[m])); }
-
-    function render(rows) {
-      const totalPages = Math.max(1, Math.ceil(rows.length / PAGE_SIZE));
-      PAGE = Math.min(Math.max(1,PAGE), totalPages);
-
-      const start = (PAGE - 1) * PAGE_SIZE;
-      const pageRows = rows.slice(start, start + PAGE_SIZE);
-
-      els.tbody.innerHTML = pageRows.length ? pageRows.map(r => `
+      body.innerHTML = filtered.map(row => `
         <tr>
-          <td>${esc(field(r,'Hospital Name'))}</td>
-          <td>${esc(field(r,'Company Name'))}</td>
-          <td>${esc(field
+          <td>${row.hospital}</td>
+          <td>${row.company}</td>
+          <td>${row.city}</td>
+          <td>${row.state}</td>
+          <td>${row.pin}</td>
+          <td>${row.address}</td>
+        </tr>
+      `).join("");
+    }
+
+    function resetSearch() {
+      document.getElementById('search').value = '';
+      document.getElementById("table-body").innerHTML = `<tr><td colspan="6">No results yet</td></tr>`;
+    }
+
+    fetchData(); // Initial load
+  </script>
+
+</body>
+</html>
