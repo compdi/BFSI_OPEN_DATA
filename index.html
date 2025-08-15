@@ -11,150 +11,76 @@
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-6DWB0Q3MJB');
+    gtag('js', new Date()); gtag('config', 'G-6DWB0Q3MJB');
   </script>
 
   <style>
     :root {
-      --bg-color: #ffffff;
-      --text-color: #2c3e50;
-      --card-bg: #ffffff;
-      --card-border: #e7e7e7;
-      --muted: #666;
+      --bg-color: #ffffff; --text-color: #2c3e50;
+      --card-bg: #ffffff; --card-border: #e7e7e7; --muted: #666;
     }
-
     html { scroll-behavior: smooth; }
-
-    body.dark-theme {
-      --bg-color: #121212;
-      --text-color: #ffffff;
-      --card-bg: #1b1b1b;
-      --card-border: #2a2a2a;
-      --muted: #aaa;
-    }
-
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: var(--bg-color);
-      color: var(--text-color);
-      transition: background-color 0.3s, color 0.3s;
-    }
+    body.dark-theme { --bg-color:#121212; --text-color:#ffffff; --card-bg:#1b1b1b; --card-border:#2a2a2a; --muted:#aaa; }
+    body { font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin:0; background:var(--bg-color); color:var(--text-color); }
 
     /* Navbar */
-    .navbar {
-      position: absolute;
-      top: 0; left: 0; width: 100%;
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 10px 20px; z-index: 2;
-    }
-    .navbar img {
-      height: 110px; background: white; padding: 10px; border-radius: 10px;
-      box-shadow: 0 0 8px rgba(0,0,0,0.2);
-    }
-    .navbar-right { margin-right: 20px; }
-    .theme-toggle {
-      padding: 6px 12px;
-      background: #fff; border: 1px solid #ccc; border-radius: 4px; cursor: pointer; font-size: 0.9em;
-    }
-    body.dark-theme .theme-toggle { background: #333; color: #fff; border-color: #666; }
+    .navbar { position:absolute; top:0; left:0; width:100%; display:flex; justify-content:space-between; align-items:center; padding:10px 20px; z-index:2; }
+    .navbar img { height:110px; background:#fff; padding:10px; border-radius:10px; box-shadow:0 0 8px rgba(0,0,0,.2); }
+    .navbar-right { margin-right:20px; }
+    .theme-toggle { padding:6px 12px; background:#fff; border:1px solid #ccc; border-radius:4px; cursor:pointer; font-size:.9em; }
+    body.dark-theme .theme-toggle { background:#333; color:#fff; border-color:#666; }
 
     /* Floating socials */
-    .social-floating {
-      position: fixed; bottom: 20px; right: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 999;
-    }
-    .social-icon { width: 40px; height: 40px; }
+    .social-floating { position:fixed; bottom:20px; right:20px; display:flex; flex-direction:column; gap:10px; z-index:999; }
+    .social-icon { width:40px; height:40px; }
 
-    /* Header hero */
-    header {
-      background-color: transparent; padding: 80px 20px 40px; text-align: center;
-    }
-    header h1 { font-size: 3.5em; margin-bottom: 10px; }
-    header p { font-size: 1.1em; margin: 0 auto; }
-    .cta-button {
-      display: inline-block; margin-top: 25px; padding: 12px 20px;
-      background-color: #0077cc; color: white; font-weight: bold; text-decoration: none;
-      border-radius: 8px; transition: background-color 0.3s;
-    }
-    .cta-button:hover { background-color: #005fa3; }
+    /* Header */
+    header { background:transparent; padding:80px 20px 40px; text-align:center; }
+    header h1 { font-size:3.5em; margin-bottom:10px; }
+    header p { font-size:1.1em; margin:0 auto; }
+    .cta-button { display:inline-block; margin-top:25px; padding:12px 20px; background:#0077cc; color:#fff; font-weight:bold; text-decoration:none; border-radius:8px; }
+    .cta-button:hover { background:#005fa3; }
 
-    /* Main container */
-    .content {
-      max-width: 1200px;
-      margin: 20px auto;
-      padding: 0 20px;
-    }
+    /* Main */
+    .content { max-width:1200px; margin:20px auto; padding:0 20px; }
+    .bc-layout { display:grid; grid-template-columns:360px 1fr; gap:16px; align-items:start; }
+    @media (max-width:960px){ .bc-layout{ grid-template-columns:1fr; } }
 
-    /* Left-right layout */
-    .bc-layout {
-      display: grid;
-      grid-template-columns: 360px 1fr;
-      gap: 16px; align-items: start;
-    }
-    @media (max-width: 960px){
-      .bc-layout{ grid-template-columns: 1fr; }
-    }
-
-    /* Left card (search widget) */
-    .bc-left { position: sticky; top: 12px; }
-    .bc-card {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 14px;
-      padding: 14px;
-      box-shadow: 0 1px 4px rgba(0,0,0,.04);
-    }
-    .bc-title { margin: 0 0 10px; font-size: 18px; }
-    .bc-field { margin-bottom: 10px; }
-    .bc-field label { display:block; font-size: 12px; opacity: .8; margin-bottom: 4px; }
-    .bc-field input {
-      width:100%; padding:8px; border:1px solid #d8d8d8; border-radius: 8px;
-      background: var(--bg-color); color: var(--text-color);
-    }
-    .bc-grid { display:grid; grid-template-columns: 1fr 1fr; gap:8px; }
-    .bc-actions { display:flex; gap:8px; margin: 8px 0 6px; }
-    .bc-actions button {
-      padding:8px 12px; border-radius:10px; border:1px solid #bbb; background:#f8f8f8; cursor:pointer;
-    }
+    /* Left card (search) */
+    .bc-left { position:sticky; top:12px; }
+    .bc-card { background:var(--card-bg); border:1px solid var(--card-border); border-radius:14px; padding:14px; box-shadow:0 1px 4px rgba(0,0,0,.04); }
+    .bc-title { margin:0 0 10px; font-size:18px; }
+    .bc-field { margin-bottom:10px; }
+    .bc-field label { display:block; font-size:12px; opacity:.8; margin-bottom:4px; }
+    .bc-field input { width:100%; padding:8px; border:1px solid #d8d8d8; border-radius:8px; background:var(--bg-color); color:var(--text-color); }
+    .bc-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+    .bc-actions { display:flex; gap:8px; margin:8px 0 6px; }
+    .bc-actions button { padding:8px 12px; border-radius:10px; border:1px solid #bbb; background:#f8f8f8; cursor:pointer; }
     .bc-actions .ghost { background:transparent; }
-    .bc-meta { font-size: 12px; opacity: .8; margin: 4px 0 8px; }
-    .bc-table-wrap { border:1px solid #eee; border-radius: 10px; overflow: auto; }
-    .bc-table { width:100%; border-collapse: collapse; table-layout: fixed; user-select: none; }
-    .bc-table th, .bc-table td { border-bottom:1px solid #f0f0f0; padding:8px; vertical-align: top; }
+    .bc-meta { font-size:12px; opacity:.8; margin:4px 0 8px; min-height:16px; }
+    .bc-table-wrap { border:1px solid #eee; border-radius:10px; overflow:auto; }
+    .bc-table { width:100%; border-collapse:collapse; table-layout:fixed; user-select:none; }
+    .bc-table th, .bc-table td { border-bottom:1px solid #f0f0f0; padding:8px; vertical-align:top; }
     .bc-table th { text-align:left; font-size:12px; opacity:.7; }
-    .bc-table td { font-size: 13px; }
+    .bc-table td { font-size:13px; }
     .bc-pagination { display:flex; align-items:center; gap:10px; justify-content:center; padding:8px 0; }
-    .bc-note { font-size: 12px; opacity:.7; margin-top: 8px; }
+    .bc-note { font-size:12px; opacity:.7; margin-top:8px; }
 
-    /* Right side content (your existing sections) */
-    .section { margin-bottom: 20px; }
-    h2 { color: var(--text-color); }
-    a { color: #0077cc; text-decoration: none; }
-    a:hover { text-decoration: underline; }
+    /* Right side */
+    .section { margin-bottom:20px; }
+    h2 { color:var(--text-color); }
+    a { color:#0077cc; text-decoration:none; } a:hover { text-decoration:underline; }
+    iframe { width:100%; height:700px; border:0; border-radius:8px; box-shadow:0 0 10px rgba(0,0,0,.1); margin-bottom:10px; }
+    .disclaimer { font-size:12px; color:var(--muted); margin-top:5px; }
 
-    iframe {
-      width: 100%; height: 700px; border: 0; border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); margin-bottom: 10px;
-    }
-    .disclaimer { font-size: 12px; color: var(--muted); margin-top: 5px; }
-
-    footer {
-      text-align: center; font-size: 0.8em; color: #999; padding: 10px 0; margin-top: 10px;
-    }
+    footer { text-align:center; font-size:.8em; color:#999; padding:10px 0; margin-top:10px; }
 
     /* Mobile tweaks */
-    @media only screen and (max-width: 768px) {
-      header h1 { font-size: 2.2em; }
-      .cta-button { font-size: 1em; padding: 10px 16px; }
-      iframe { height: 450px; margin-bottom: 10px; }
-      .navbar img { height: 80px; }
-      .navbar { padding: 6px 12px; }
-      .navbar-right { margin-right: 10px; }
-      .social-icon { width: 30px; height: 30px; }
-      .content { padding: 0 10px; }
-      .section { margin-bottom: 15px; }
+    @media (max-width:768px){
+      header h1{font-size:2.2em;} .cta-button{font-size:1em; padding:10px 16px;}
+      iframe{height:450px; margin-bottom:10px;}
+      .navbar img{height:80px;} .navbar{padding:6px 12px;} .navbar-right{margin-right:10px;}
+      .social-icon{width:30px; height:30px;} .content{padding:0 10px;} .section{margin-bottom:15px;}
     }
   </style>
 </head>
@@ -162,9 +88,7 @@
   <!-- Navbar -->
   <div class="navbar">
     <a href="/"><img src="Logo.png" alt="BFSI Open Data Logo"></a>
-    <div class="navbar-right">
-      <button class="theme-toggle" onclick="toggleTheme()">Toggle Theme</button>
-    </div>
+    <div class="navbar-right"><button class="theme-toggle" onclick="document.body.classList.toggle('dark-theme')">Toggle Theme</button></div>
   </div>
 
   <!-- Floating social -->
@@ -191,73 +115,60 @@
 
           <div class="bc-field">
             <label>Search (min 3 chars)</label>
-            <input id="bc-q" type="text" placeholder="Hospital, company, city, state, PIN" autocomplete="off">
+            <input data-id="searchAll" type="text" placeholder="Hospital, company, city, state, PIN" autocomplete="off">
           </div>
 
           <div class="bc-grid">
             <div class="bc-field">
               <label>Company</label>
-              <input id="bc-company" type="text" placeholder="e.g., Star, Niva">
+              <input data-id="company" type="text" placeholder="e.g., Star, Niva">
             </div>
             <div class="bc-field">
               <label>State</label>
-              <input id="bc-state" type="text" placeholder="Exact (e.g., Maharashtra)">
+              <input data-id="state" type="text" placeholder="Exact (e.g., Maharashtra)">
             </div>
             <div class="bc-field">
               <label>City</label>
-              <input id="bc-city" type="text" placeholder="Exact (e.g., Pune)">
+              <input data-id="city" type="text" placeholder="Exact (e.g., Pune)">
             </div>
             <div class="bc-field">
               <label>PIN</label>
-              <input id="bc-pin" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="6" placeholder="6-digit">
+              <input data-id="pin" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="6" placeholder="6-digit">
             </div>
           </div>
 
           <div class="bc-actions">
-            <button id="bc-search">Search</button>
-            <button id="bc-clear" class="ghost">Clear</button>
+            <button data-id="doSearch">Search</button>
+            <button data-id="doClear" class="ghost">Clear</button>
           </div>
 
-          <div id="bc-meta" class="bc-meta"></div>
+          <div class="bc-meta net-msg" data-id="netMsg"></div>
 
           <div class="bc-table-wrap">
             <table class="bc-table" aria-label="Blacklisted hospitals search results">
               <thead>
                 <tr>
-                  <th>Hospital</th>
-                  <th>Company</th>
-                  <th>City</th>
-                  <th>State</th>
-                  <th>PIN</th>
-                  <th>Address</th>
+                  <th>Hospital</th><th>Company</th><th>City</th><th>State</th><th>PIN</th><th>Address</th>
                 </tr>
               </thead>
-              <tbody id="bc-tbody"></tbody>
+              <tbody data-id="tbody"></tbody>
             </table>
           </div>
 
-          <div class="bc-pagination">
-            <button id="bc-prev" disabled>Prev</button>
-            <span id="bc-pageinfo">Page 1</span>
-            <button id="bc-next" disabled>Next</button>
-          </div>
-
+          <div class="bc-pagination" data-id="pager"></div>
           <p class="bc-note">Search-only view. Bulk export disabled.</p>
         </div>
       </aside>
 
-      <!-- RIGHT: your existing BFSI sections unchanged -->
+      <!-- RIGHT: BFSI sections -->
       <main class="bc-right">
-        <div class="section">
-          <p><strong>Insurance | Financial data | News | Analysis | Storytelling using Data</strong></p>
-        </div>
+        <div class="section"><p><strong>Insurance | Financial data | News | Analysis | Storytelling using Data</strong></p></div>
 
         <div class="section" id="gi-dashboard">
           <h2>General Insurance Dashboard</h2>
           <p>This dashboard presents an insurer-wise snapshot of gross premium numbers across Motor, Health, and Personal Accident lines. Filter and explore by Year or Insurer.</p>
           <iframe src="https://lookerstudio.google.com/embed/reporting/b311387f-204c-489a-879d-5f8594c5019e/page/RA7LF"
-                  allowfullscreen sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox">
-          </iframe>
+            allowfullscreen sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
           <p class="disclaimer"><strong>Disclaimer:</strong> The information and visuals presented in this dashboard are compiled from publicly available data sources and are intended for general informational purposes only.</p>
         </div>
 
@@ -269,116 +180,99 @@
     </div>
   </div>
 
-  <footer>
-    &copy; 2025 BFSI Open Data · All rights reserved
-  </footer>
+  <footer>&copy; 2025 BFSI Open Data · All rights reserved</footer>
 
+  <!-- Search widget logic (gviz, client-side filtering) -->
   <script>
-    function toggleTheme() {
-      document.body.classList.toggle('dark-theme');
-    }
-  </script>
+  (function () {
+    // --------- SETTINGS ----------
+    const SHEET_ID   = "1g-98WEqa92aIREpqmSxbIiHrFL-OtedJNFOhDGGvGFw";
+    const SHEET_NAME = "Hospitals"; // must match tab name exactly
+    const GVIZ = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(SHEET_NAME)}&tq=${encodeURIComponent('select *')}`;
+    const PAGE_SIZE = 20;
 
-  <!-- Search widget logic -->
-  <script>
-  (function(){
-    const API = 'https://script.google.com/macros/s/AKfycbxDN_LStQzUq9kWn3_1m3pUrOgYYpDP49VEy3_m8Xz0tk0IV5tJ6-OCWFGsME2XVC2s/exec';
+    // --------- STATE ----------
+    let DATA = [];      // all rows, mapped as objects
+    let PAGE = 1;
 
+    // --------- DOM ----------
     const els = {
-      q:       document.getElementById('bc-q'),
-      company: document.getElementById('bc-company'),
-      state:   document.getElementById('bc-state'),
-      city:    document.getElementById('bc-city'),
-      pin:     document.getElementById('bc-pin'),
-      search:  document.getElementById('bc-search'),
-      clear:   document.getElementById('bc-clear'),
-      tbody:   document.getElementById('bc-tbody'),
-      meta:    document.getElementById('bc-meta'),
-      prev:    document.getElementById('bc-prev'),
-      next:    document.getElementById('bc-next'),
-      pageinfo:document.getElementById('bc-pageinfo')
+      searchAll: document.querySelector('[data-id="searchAll"]'),
+      company:   document.querySelector('[data-id="company"]'),
+      state:     document.querySelector('[data-id="state"]'),
+      city:      document.querySelector('[data-id="city"]'),
+      pin:       document.querySelector('[data-id="pin"]'),
+      doSearch:  document.querySelector('[data-id="doSearch"]'),
+      doClear:   document.querySelector('[data-id="doClear"]'),
+      msg:       document.querySelector('[data-id="netMsg"]'),
+      tbody:     document.querySelector('[data-id="tbody"]'),
+      pager:     document.querySelector('[data-id="pager"]')
     };
 
-    let page = 1;
-    const pageSize = 10;
-    let total = 0;
+    function showMsg(text){ if(els.msg) els.msg.textContent = text || ''; }
 
-    function params() {
-      const p = new URLSearchParams();
-      const v = (x)=> (x||'').trim();
-      if (v(els.q.value))       p.set('q', v(els.q.value));
-      if (v(els.company.value)) p.set('company', v(els.company.value));
-      if (v(els.state.value))   p.set('state', v(els.state.value));
-      if (v(els.city.value))    p.set('city', v(els.city.value));
-      if (v(els.pin.value))     p.set('pin', v(els.pin.value));
-      p.set('page', page);
-      p.set('pageSize', pageSize);
-      return p.toString();
+    function parseGviz(text) {
+      // text is like: google.visualization.Query.setResponse({...});
+      const json = JSON.parse(text.substring(text.indexOf('{'), text.lastIndexOf(')')));
+      const cols = json.table.cols.map(c => (c.label || c.id || '').trim());
+      return json.table.rows.map(r => {
+        const obj = {};
+        cols.forEach((k,i)=> obj[k || ('col'+i)] = (r.c[i] && r.c[i].v!=null) ? r.c[i].v : '');
+        return obj;
+      });
     }
 
-    async function runSearch() {
-      const cols = 6;
-      els.tbody.innerHTML = `<tr><td colspan="${cols}">Searching…</td></tr>`;
+    async function load() {
       try {
-        const res = await fetch(`${API}?${params()}`);
-        const data = await res.json();
-
-        if (data.error) {
-          els.meta.textContent = data.error;
-          els.tbody.innerHTML = '';
-          total = 0;
-          updatePager();
-          return;
-        }
-
-        total = data.total || 0;
-        const rows = data.results || [];
-        els.meta.textContent = `${total} result${total===1?'':'s'} found`;
-        els.tbody.innerHTML = rows.map(r => `
-          <tr>
-            <td>${escapeHtml(r.hospital || '')}</td>
-            <td>${escapeHtml(r.company || '')}</td>
-            <td>${escapeHtml(r.city || '')}</td>
-            <td>${escapeHtml(r.state || '')}</td>
-            <td>${escapeHtml(r.pin || '')}</td>
-            <td>${escapeHtml(r.address || '')}</td>
-          </tr>
-        `).join('') || `<tr><td colspan="${cols}">No results</td></tr>`;
-        updatePager();
+        showMsg('Loading…');
+        const res = await fetch(GVIZ, { cache: 'no-store' });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const text = await res.text();
+        DATA = parseGviz(text);
+        showMsg(''); PAGE = 1; render(filter());
       } catch (e) {
-        els.meta.textContent = 'Network error. Try again.';
-        els.tbody.innerHTML = '';
-        total = 0;
-        updatePager();
+        console.error(e); showMsg('Network error. Check sheet sharing & tab name.');
       }
     }
 
-    function escapeHtml(s) {
-      return (s+'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    function field(row, key){ return (row[key] || '').toString(); }
+
+    function filter() {
+      const q = (els.searchAll.value || '').trim().toLowerCase();
+      const company = (els.company.value || '').trim().toLowerCase();
+      const state   = (els.state.value || '').trim().toLowerCase();
+      const city    = (els.city.value || '').trim().toLowerCase();
+      const pin     = (els.pin.value || '').trim();
+
+      let out = DATA;
+
+      // global search (min 3 chars)
+      if (q.length >= 3) {
+        out = out.filter(r => (
+          `${field(r,'Hospital Name')} ${field(r,'Company Name')} ${field(r,'Address')} ${field(r,'State')} ${field(r,'City/Place')} ${field(r,'Pin Code')} ${field(r,'Source')}`
+          .toLowerCase()
+        ).includes(q));
+      }
+
+      if (company) out = out.filter(r => field(r,'Company Name').toLowerCase().includes(company));
+      if (state)   out = out.filter(r => field(r,'State').toLowerCase() === state);
+      if (city)    out = out.filter(r => field(r,'City/Place').toLowerCase() === city);
+      if (pin)     out = out.filter(r => field(r,'Pin Code').toString().startsWith(pin));
+
+      return out;
     }
 
-    function updatePager() {
-      const pages = Math.max(1, Math.ceil(total / pageSize));
-      els.pageinfo.textContent = `Page ${page} of ${pages}`;
-      els.prev.disabled = (page <= 1);
-      els.next.disabled = (page >= pages);
-    }
+    function esc(s){ return (s+'').replace(/[&<>"']/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;'}[m])); }
 
-    function clearAll() {
-      els.q.value = els.company.value = els.state.value = els.city.value = els.pin.value = '';
-      page = 1;
-      els.meta.textContent = '';
-      els.tbody.innerHTML = '';
-      updatePager();
-    }
+    function render(rows) {
+      const totalPages = Math.max(1, Math.ceil(rows.length / PAGE_SIZE));
+      PAGE = Math.min(Math.max(1,PAGE), totalPages);
 
-    let t;
-    els.q.addEventListener('input', () => { page = 1; clearTimeout(t); t = setTimeout(runSearch, 350); });
-    els.search.addEventListener('click', () => { page = 1; runSearch(); });
-    els.clear.addEventListener('click', clearAll);
-    els.prev.addEventListener('click', () => { if (page>1){ page--; runSearch(); } });
-    els.next.addEventListener('click', () => { page++; runSearch(); });
-  })();
-  </script>
-</body>
-</html>
+      const start = (PAGE - 1) * PAGE_SIZE;
+      const pageRows = rows.slice(start, start + PAGE_SIZE);
+
+      els.tbody.innerHTML = pageRows.length ? pageRows.map(r => `
+        <tr>
+          <td>${esc(field(r,'Hospital Name'))}</td>
+          <td>${esc(field(r,'Company Name'))}</td>
+          <td>${esc(field
