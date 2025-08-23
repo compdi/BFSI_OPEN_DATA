@@ -5,115 +5,262 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Data essays, dashboards, and storytelling from the Indian BFSI world. Built by experts, designed for the underserved.">
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-6DWB0Q3MJB"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-6DWB0Q3MJB');
+  </script>
+
   <style>
+    :root {
+      --bg-color: #ffffff;
+      --text-color: #2c3e50;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body.dark-theme {
+      --bg-color: #121212;
+      --text-color: #ffffff;
+    }
+
     body {
-      font-family: 'Segoe UI', sans-serif;
-      margin: 0; padding: 0;
-      background: #f4f4f4; color: #333;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      transition: background-color 0.3s, color 0.3s;
     }
-    header { padding: 20px; background: #0077cc; color: white; text-align: center; }
-    h1 { margin: 0; }
-    .content { max-width: 1000px; margin: 20px auto; padding: 20px; background: white; border-radius: 8px; }
-    label { display: block; margin-top: 10px; font-weight: bold; }
-    input[type="text"] {
-      width: 100%; padding: 8px; margin-top: 4px; border: 1px solid #ccc; border-radius: 4px;
+
+    .navbar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      z-index: 2;
     }
-    button {
-      margin-top: 15px; padding: 10px 20px;
-      background: #0077cc; color: white; border: none; border-radius: 4px; cursor: pointer;
+
+    .navbar img {
+      height: 110px;
+      background: white;
+      padding: 10px;
+      border-radius: 10px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.2);
     }
-    button:hover { background: #005fa3; }
-    table {
-      width: 100%; margin-top: 20px;
-      border-collapse: collapse;
+
+    .navbar-right {
+      margin-right: 20px;
     }
-    th, td {
-      padding: 10px; border-bottom: 1px solid #ccc;
+
+    .theme-toggle {
+      padding: 6px 12px;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.9em;
     }
-    th { background: #f2f2f2; text-align: left; }
-    .note { margin-top: 10px; font-size: 0.9em; color: #777; }
+
+    body.dark-theme .theme-toggle {
+      background: #333;
+      color: #fff;
+      border-color: #666;
+    }
+
+    .social-floating {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      z-index: 999;
+    }
+
+    .social-icon {
+      width: 40px;
+      height: 40px;
+    }
+
+    header {
+      background-color: transparent;
+      padding: 80px 20px 40px;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 3.5em;
+      margin-bottom: 10px;
+    }
+
+    header p {
+      font-size: 1.1em;
+      margin: 0 auto;
+    }
+
+    .cta-button {
+      display: inline-block;
+      margin-top: 25px;
+      padding: 12px 20px;
+      background-color: #0077cc;
+      color: white;
+      font-weight: bold;
+      text-decoration: none;
+      border-radius: 8px;
+      transition: background-color 0.3s;
+    }
+
+    .cta-button:hover {
+      background-color: #005fa3;
+    }
+
+    .content {
+      max-width: 850px;
+      margin: 20px auto;
+      padding: 0 20px;
+    }
+
+    h2 {
+      color: var(--text-color);
+    }
+
+    a {
+      color: #0077cc;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .section {
+      margin-bottom: 20px;
+    }
+
+    iframe {
+      width: 100%;
+      height: 700px;
+      border: 0;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      margin-bottom: 10px;
+    }
+
+    .disclaimer {
+      font-size: 12px;
+      color: #666;
+      margin-top: 5px;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 0.8em;
+      color: #999;
+      padding: 10px 0;
+      margin-top: 10px;
+    }
+
+    @media only screen and (max-width: 768px) {
+      header h1 {
+        font-size: 2.2em;
+      }
+
+      .cta-button {
+        font-size: 1em;
+        padding: 10px 16px;
+      }
+
+      iframe {
+        height: 450px;
+        margin-bottom: 10px;
+      }
+
+      .navbar img {
+        height: 80px;
+      }
+
+      .navbar {
+        padding: 6px 12px;
+      }
+
+      .navbar-right {
+        margin-right: 10px;
+      }
+
+      .social-icon {
+        width: 30px;
+        height: 30px;
+      }
+
+      .content {
+        padding: 0 10px;
+      }
+
+      .section {
+        margin-bottom: 15px;
+      }
+    }
   </style>
 </head>
 <body>
-
-  <header>
-    <h1>Blacklisted / Delisted Hospitals</h1>
-    <p>Powered by BFSI Open Data</p>
-  </header>
-
-  <div class="content">
-    <label for="search">Search (Hospital, Company, City, State, PIN)</label>
-    <input type="text" id="search" placeholder="e.g., Fortis, Star, Pune">
-
-    <button onclick="runSearch()">Search</button>
-    <button onclick="resetSearch()" style="background:#999;margin-left:10px;">Clear</button>
-
-    <table id="results">
-      <thead>
-        <tr>
-          <th>Hospital</th>
-          <th>Company</th>
-          <th>City</th>
-          <th>State</th>
-          <th>PIN</th>
-          <th>Address</th>
-        </tr>
-      </thead>
-      <tbody id="table-body">
-        <tr><td colspan="6">No results yet</td></tr>
-      </tbody>
-    </table>
-
-    <p class="note">Only search view. Bulk download is disabled.</p>
+  <div class="navbar">
+    <a href="/"><img src="Logo.png" alt="BFSI Open Data Logo"></a>
+    <div class="navbar-right">
+      <button class="theme-toggle" onclick="toggleTheme()">Toggle Theme</button>
+    </div>
   </div>
 
+  <div class="social-floating">
+    <a href="https://www.linkedin.com/company/bfsi-open-data/?viewAsMember=true" target="_blank"><img class="social-icon" src="https://cdn-icons-png.flaticon.com/512/145/145807.png" alt="LinkedIn"></a>
+    <a href="https://www.instagram.com/bfsi_open_data/" target="_blank"><img class="social-icon" src="https://cdn-icons-png.flaticon.com/512/174/174855.png" alt="Instagram"></a>
+    <a href="https://x.com/bfsiopendata" target="_blank"><img class="social-icon" src="https://cdn-icons-png.flaticon.com/512/733/733579.png" alt="Twitter/X"></a>
+  </div>
+
+  <header>
+    <h1>BFSI Open Data</h1>
+    <p><strong>Insurance & Financial Services Expert | Strategist | Advocate for the Underserved</strong></p>
+    <a href="#gi-dashboard" class="cta-button">📈 Explore General Insurance Dashboard →</a>
+  </header>
+
+  <div id="main" class="content">
+    <div class="section">
+      <p><strong>Insurance | Financial data | News | Analysis | Storytelling using Data</strong></p>
+    </div>
+
+    <div class="section" id="gi-dashboard">
+      <h2>General Insurance Dashboard</h2>
+      <p>This dashboard presents an insurer-wise snapshot of gross premium numbers across Motor, Health, and Personal Accident lines. Filter and explore by Year or Insurer.</p>
+      <iframe src="https://lookerstudio.google.com/embed/reporting/b311387f-204c-489a-879d-5f8594c5019e/page/RA7LF"
+              allowfullscreen sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox">
+      </iframe>
+      <p class="disclaimer"><strong>Disclaimer:</strong> The information and visuals presented in this dashboard are compiled from publicly available data sources and are intended for general informational purposes only.</p>
+    </div>
+
+    <div class="section">
+      <h2>Let’s Connect</h2>
+      <p>Reach out to collaborate or discuss ideas. 📧 <a href="mailto:bfsiopendata@gmail.com">bfsiopendata@gmail.com</a></p>
+    </div>
+  </div>
+
+  <footer>
+    &copy; 2025 BFSI Open Data · All rights reserved
+  </footer>
+
   <script>
-    const API_URL = 'https://script.google.com/macros/s/AKfycbxDN_LStQzUq9kWn3_1m3pUrOgYYpDP49VEy3_m8Xz0tk0IV5tJ6-OCWFGsME2XVC2s/exec';
-
-    let allData = [];
-
-    async function fetchData() {
-      try {
-        const res = await fetch(API_URL);
-        const json = await res.json();
-        allData = json.data || [];
-      } catch (err) {
-        console.error("Fetch error:", err);
-        document.getElementById("table-body").innerHTML = `<tr><td colspan="6">Failed to load data</td></tr>`;
-      }
+    function toggleTheme() {
+      document.body.classList.toggle('dark-theme');
     }
-
-    function runSearch() {
-      const q = document.getElementById('search').value.toLowerCase();
-      const filtered = allData.filter(row => {
-        return Object.values(row).some(val => val.toLowerCase().includes(q));
-      });
-
-      const body = document.getElementById("table-body");
-      if (filtered.length === 0) {
-        body.innerHTML = `<tr><td colspan="6">No results found</td></tr>`;
-        return;
-      }
-
-      body.innerHTML = filtered.map(row => `
-        <tr>
-          <td>${row.hospital}</td>
-          <td>${row.company}</td>
-          <td>${row.city}</td>
-          <td>${row.state}</td>
-          <td>${row.pin}</td>
-          <td>${row.address}</td>
-        </tr>
-      `).join("");
-    }
-
-    function resetSearch() {
-      document.getElementById('search').value = '';
-      document.getElementById("table-body").innerHTML = `<tr><td colspan="6">No results yet</td></tr>`;
-    }
-
-    fetchData(); // Initial load
   </script>
-
 </body>
 </html>
