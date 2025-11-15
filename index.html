@@ -30,6 +30,7 @@
   .textarea{width:100%;min-height:80px;padding:10px;border-radius:8px;border:1px dashed #cfd8df;background:#fff}
   .footer{margin-top:18px;color:var(--muted);font-size:13px}
   .hidden{display:none}
+  .notice{padding:12px;border-radius:8px;background:#fff;border:1px dashed #e6eaee;color:var(--muted)}
   @media(max-width:640px){header{flex-direction:column;align-items:flex-start} .controls{flex-direction:column}}
 </style>
 </head>
@@ -45,11 +46,11 @@
 
   <div class="controls">
     <div class="search">
-      <input id="q" type="search" placeholder="Search hospital name or city..." aria-label="search">
+      <input id="q" type="search" placeholder="Search hospital name or city..." aria-label="search" autocomplete="off">
     </div>
 
     <!-- Admin tools - hidden by default -->
-    <div id="adminTools" class="uploader hidden">
+    <div id="adminTools" class="uploader hidden" aria-hidden="true">
       <button id="btnSample" class="small secondary">Use sample data</button>
       <label class="small secondary" style="display:inline-block;padding:9px 10px;border-radius:8px;cursor:pointer;">
         Upload CSV<input id="file" type="file" accept=".csv,.json" style="display:none">
@@ -63,6 +64,7 @@
     Press <strong>Ctrl + A</strong> to open admin mode (you only).
   </p>
 
+  <!-- Paste area -->
   <div id="pasteArea" class="hidden" style="margin-bottom:10px">
     <textarea id="paste" class="textarea" placeholder="Paste CSV or JSON here (include header row)"></textarea>
     <div style="margin-top:8px">
@@ -74,21 +76,28 @@
   <div id="status" class="info" aria-live="polite"></div>
   <div id="count" class="count"></div>
 
+  <!-- instruction / placeholder when no search yet -->
+  <div id="placeholder" class="notice">
+    <div id="placeholderText">Type a hospital name or city above to begin searching.</div>
+    <div id="datasetInfo" style="margin-top:8px;color:#556;padding-top:6px;border-top:1px dashed #eee;font-size:13px"></div>
+  </div>
+
   <div id="list" class="list" aria-live="polite"></div>
 
-  <div class="footer">Tip: paste a few rows from Excel as CSV or upload your CSV. If dataset is large (&gt;1000 rows) browser may slow; use sample for demo. Admin controls are hidden from public users.</div>
+  <div class="footer">Tip: paste a few rows from Excel as CSV or upload your CSV. If dataset is large (&gt;1000 rows) browser may slow; use sample for demos. Admin controls are hidden from public users.</div>
 </div>
 
 <script>
 (function(){
-  // ----- CONFIG -----
-  const ADMIN_PASSWORD = "km@2025"; // change if you like
-  const MAX_RENDER = 500;
-  const PREVIEW_LIMIT = 200;
+  // CONFIG
+  const ADMIN_PASSWORD = "km@2025"; // change to your key
+  const MAX_RENDER = 300;           // maximum cards to render
+  const PREVIEW_LIMIT = 200;        // when no query, show none; after search limit
   const DEBOUNCE_MS = 250;
 
-  // ----- SAMPLE DATA -----
-  let hospitals = [
+  // SAMPLE (small)
+  let hospitals = []; // initially empty; sample must be loaded via admin or sample button
+  const sampleData = [
     {"hospital_name":"Care Life Hospital","city":"Thane","state":"Maharashtra","status":"Blacklisted","insurer":"Aditya Birla Health"},
     {"hospital_name":"City General Hospital","city":"Mumbai","state":"Maharashtra","status":"Active","insurer":"ICICI Lombard"},
     {"hospital_name":"Sunrise Multi Speciality","city":"Pune","state":"Maharashtra","status":"Blacklisted","insurer":"HDFC ERGO"},
@@ -96,9 +105,8 @@
     {"hospital_name":"Sankalp Eye Hospital","city":"Hyderabad","state":"Telangana","status":"De-empanelled","insurer":""},
     {"hospital_name":"Seva Critical Care","city":"Delhi","state":"Delhi","status":"Blacklisted","insurer":"Star Health"}
   ];
-  const hospitalsSampleBackup = [...hospitals];
 
-  // ----- ELEMENTS -----
+  // ELEMENTS
   const el = {
     q: document.getElementById('q'),
     list: document.getElementById('list'),
@@ -112,11 +120,13 @@
     btnLoad: document.getElementById('btnLoad'),
     btnCancelPaste: document.getElementById('btnCancelPaste'),
     adminTools: document.getElementById('adminTools'),
-    adminHint: document.getElementById('adminHint'),
+    datasetInfo: document.getElementById('datasetInfo'),
+    placeholder: document.getElementById('placeholder'),
+    placeholderText: document.getElementById('placeholderText'),
     btnLogout: document.getElementById('btnLogout')
   };
 
-  // ----- CSV parser (robust simple parser handles quoted fields) -----
+  // Simple CSV parser that handles quotes
   function CSVToArray(strData, strDelimiter) {
     strDelimiter = (strDelimiter || ",");
     var objPattern = new RegExp(
@@ -159,10 +169,10 @@
     return rows;
   }
 
-  // ----- Helpers -----
   function normalizeStr(s){ return (s||'').toString().trim().toLowerCase(); }
-  function showStatus(txt, holdMs=5000){ el.status.textContent = txt; if(holdMs>0) setTimeout(()=>{ if(el.status.textContent===txt) el.status.textContent = '' }, holdMs); }
+  function showStatus(txt, ms=5000){ el.status.textContent = txt; if(ms>0) setTimeout(()=>{ if(el.status.textContent===txt) el.status.textContent = '' }, ms); }
 
+  // Render (only called after search)
   function renderList(items){
     el.list.innerHTML = '';
     el.count.textContent = items.length + (items.length===1 ? ' hospital found' : ' hospitals found');
@@ -194,11 +204,20 @@
     }
   }
 
-  // ----- SEARCH (debounced) -----
+  // Search logic: only search on typed query; if empty, show placeholder
   let timer = null;
   function doSearch(){
     const q = normalizeStr(el.q.value);
-    if(!q){ renderList(hospitals.slice(0, PREVIEW_LIMIT)); return; }
+    if(!q){
+      // clear results and show placeholder with dataset count
+      el.list.innerHTML = '';
+      el.count.textContent = '';
+      el.placeholder.classList.remove('hidden');
+      el.datasetInfo.textContent = hospitals.length ? `Dataset loaded: ${hospitals.length} hospitals.` : `No dataset loaded. Use admin mode to upload or paste data.`;
+      return;
+    }
+    el.placeholder.classList.add('hidden');
+    // filter
     const out = hospitals.filter(r=>{
       return normalizeStr(r.hospital_name).includes(q) || normalizeStr(r.city).includes(q);
     });
@@ -209,18 +228,18 @@
     timer = setTimeout(doSearch, DEBOUNCE_MS);
   });
 
-  // ----- FILE UPLOAD (client-only) -----
-  el.file.addEventListener('change', function(e){
+  // FILE upload (client-only)
+  document.getElementById('file').addEventListener('change', function(e){
     const f = e.target.files[0]; if(!f) return;
     const reader = new FileReader();
     reader.onload = function(evt){
       const text = evt.target.result;
       parseAndLoad(text);
     };
-    reader.readAsText(f, 'utf-8'); // try utf-8
+    reader.readAsText(f, 'utf-8');
   });
 
-  // ----- PASTE UI -----
+  // PASTE UI controls
   el.btnPaste.addEventListener('click', ()=> { el.pasteArea.classList.remove('hidden'); el.paste.focus(); });
   el.btnCancelPaste.addEventListener('click', ()=> { el.pasteArea.classList.add('hidden'); el.paste.value=''; });
   el.btnLoad.addEventListener('click', ()=> {
@@ -229,14 +248,13 @@
     el.pasteArea.classList.add('hidden'); el.paste.value='';
   });
 
-  // ----- SAMPLE BUTTON -----
-  el.btnSample.addEventListener('click', ()=> { hospitals = [...hospitalsSampleBackup]; showStatus('Sample data loaded'); renderList(hospitals.slice(0, PREVIEW_LIMIT)); });
+  // Sample load
+  el.btnSample.addEventListener('click', ()=> { hospitals = sampleData.slice(); afterLoad(); showStatus('Sample loaded'); });
 
-  // ----- PARSE & MAP -----
+  // parse & load
   function parseAndLoad(text){
-    showStatus('Parsing data...', 20000);
+    showStatus('Parsing data...', 10000);
     text = text.trim();
-    // try JSON first
     try {
       const maybe = JSON.parse(text);
       if(Array.isArray(maybe)){
@@ -245,7 +263,7 @@
         return;
       }
     } catch(e){}
-    // else try CSV
+    // CSV
     const parsedRows = parseCSV(text);
     if(parsedRows && parsedRows.length){
       hospitals = mapRecords(parsedRows);
@@ -256,15 +274,12 @@
   }
 
   function mapRecords(rows){
-    const keysFromRow = r => Object.keys(r||{});
     return rows.map(r=>{
-      const obj = {};
-      const keys = keysFromRow(r);
+      const keys = Object.keys(r||{});
       const get = (variants)=>{
         for(const v of variants){
           if(r[v] !== undefined && r[v] !== null && String(r[v]).trim() !== '') return String(r[v]).trim();
         }
-        // case-insensitive fallback
         const lowerMap = {};
         for(const k of keys) lowerMap[k.toLowerCase()] = r[k];
         for(const v of variants){
@@ -272,47 +287,51 @@
         }
         return '';
       };
-      obj.hospital_name = get(['hospital_name','hospital','name','hospitalname']) || '';
-      obj.address = get(['address','addr','address_line']);
-      obj.city = get(['city','town','district']);
-      obj.state = get(['state','st','province']);
-      obj.status = get(['status','blacklist_status','delisted_status']) || 'Unknown';
-      obj.insurer = get(['insurer','company','payer']);
-      obj.action_date = get(['action_date','date','delisted_on']);
-      obj.geo_lat = get(['geo_lat','latitude','lat']);
-      obj.geo_lng = get(['geo_lng','longitude','long','lng']);
-      return obj;
+      return {
+        hospital_name: get(['hospital_name','hospital','name','hospitalname']) || '',
+        address: get(['address','addr','address_line']),
+        city: get(['city','town','district']),
+        state: get(['state','st','province']),
+        status: get(['status','blacklist_status','delisted_status']) || 'Unknown',
+        insurer: get(['insurer','company','payer']),
+        action_date: get(['action_date','date','delisted_on']),
+        geo_lat: get(['geo_lat','latitude','lat']),
+        geo_lng: get(['geo_lng','longitude','long','lng'])
+      };
     }).filter(x=>x.hospital_name && x.hospital_name.length>0);
   }
 
   function afterLoad(){
-    showStatus('Custom data loaded ('+hospitals.length+' rows)', 6000);
-    if(hospitals.length > 1000) showStatus('Warning: large dataset loaded ('+hospitals.length+'). Browser may slow.', 9000);
-    renderList(hospitals.slice(0, PREVIEW_LIMIT));
+    showStatus('Custom data loaded ('+hospitals.length+' rows)', 5000);
+    el.placeholder.classList.remove('hidden');
+    el.datasetInfo.textContent = `Dataset loaded: ${hospitals.length} hospitals. Type to begin searching.`;
+    el.count.textContent = '';
+    el.list.innerHTML = '';
+    if(hospitals.length > 1000) showStatus('Warning: large dataset loaded. For best performance, search first; rendering many results may slow the browser.', 8000);
   }
 
-  // ----- ADMIN MODE -----
-  let adminMode = false;
+  // ADMIN MODE (Ctrl + A)
   document.addEventListener("keydown", function (e) {
     if (e.ctrlKey && e.key.toLowerCase() === "a") {
       const pwd = prompt("Enter Admin Password:");
       if (pwd === ADMIN_PASSWORD) {
-        adminMode = true;
         el.adminTools.classList.remove('hidden');
-        showStatus('Admin mode enabled', 4000);
+        el.adminTools.setAttribute('aria-hidden', 'false');
+        showStatus('Admin mode enabled', 3000);
       } else {
         alert("Incorrect password");
       }
     }
   });
   el.btnLogout.addEventListener('click', function(){
-    adminMode = false;
     el.adminTools.classList.add('hidden');
-    showStatus('Admin mode disabled', 3000);
+    el.adminTools.setAttribute('aria-hidden', 'true');
+    showStatus('Admin mode disabled', 2000);
   });
 
-  // ----- initial render -----
-  renderList(hospitals.slice(0, PREVIEW_LIMIT));
+  // INITIAL: show placeholder message and dataset info (empty)
+  el.placeholder.classList.remove('hidden');
+  el.datasetInfo.textContent = hospitals.length ? `Dataset loaded: ${hospitals.length} hospitals.` : `No dataset loaded. Use admin mode (Ctrl + A) to upload or paste data.`;
 
 })();
 </script>
