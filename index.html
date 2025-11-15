@@ -29,11 +29,12 @@
   .uploader{display:flex;gap:8px;align-items:center}
   .textarea{width:100%;min-height:80px;padding:10px;border-radius:8px;border:1px dashed #cfd8df;background:#fff}
   .footer{margin-top:18px;color:var(--muted);font-size:13px}
+  .hidden{display:none}
   @media(max-width:640px){header{flex-direction:column;align-items:flex-start} .controls{flex-direction:column}}
 </style>
 </head>
 <body>
-<div class="wrap">
+<div class="wrap" id="app">
   <header>
     <div>
       <h1>BFSI Open Data — Hospital Blacklist Search</h1>
@@ -47,16 +48,24 @@
       <input id="q" type="search" placeholder="Search hospital name or city..." aria-label="search">
     </div>
 
-    <div class="uploader">
+    <!-- Admin tools - hidden by default -->
+    <div id="adminTools" class="uploader hidden">
       <button id="btnSample" class="small secondary">Use sample data</button>
       <label class="small secondary" style="display:inline-block;padding:9px 10px;border-radius:8px;cursor:pointer;">
         Upload CSV<input id="file" type="file" accept=".csv,.json" style="display:none">
       </label>
       <button id="btnPaste" class="small secondary">Paste CSV/JSON</button>
+      <button id="btnLogout" class="small secondary" title="Exit admin mode">Logout</button>
     </div>
   </div>
 
-  <div id="pasteArea" style="display:none;margin-bottom:10px">
+  <!-- small hint (visible always but subtle) -->
+  <p id="adminHint" style="font-size:12px;color:#bbb;text-align:right;margin-top:-10px;">
+    Press <strong>Ctrl + A</strong> to open admin mode (you only).
+  </p>
+
+  <!-- Paste area -->
+  <div id="pasteArea" class="hidden" style="margin-bottom:10px">
     <textarea id="paste" class="textarea" placeholder="Paste CSV or JSON here (include header row)"></textarea>
     <div style="margin-top:8px">
       <button id="btnLoad" class="small">Load pasted data</button>
@@ -69,14 +78,20 @@
 
   <div id="list" class="list" aria-live="polite"></div>
 
-  <div class="footer">Tip: paste a few rows from Excel as CSV or upload your CSV. If dataset is large (>1000 rows) browser may slow; use sample for demo.</div>
+  <div class="footer">Tip: paste a few rows from Excel as CSV or upload your CSV. If dataset is large (&gt;1000 rows) browser may slow; use sample for demo. Admin controls are hidden from public users.</div>
 </div>
 
-<!-- PapaParse for CSV parse -->
+<!-- PapaParse for CSV parsing -->
 <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 <script>
 (function(){
-  // minimal dataset (6 sample rows)
+  // ----- CONFIG -----
+  const ADMIN_PASSWORD = "km@2025"; // change this to your preferred admin key
+  const MAX_RENDER = 500;           // limit results to render for heavy datasets
+  const PREVIEW_LIMIT = 200;        // initial preview limit
+  const DEBOUNCE_MS = 250;
+
+  // ----- SAMPLE DATA (inline) -----
   let hospitals = [
     {"hospital_name":"Care Life Hospital","city":"Thane","state":"Maharashtra","status":"Blacklisted","insurer":"Aditya Birla Health"},
     {"hospital_name":"City General Hospital","city":"Mumbai","state":"Maharashtra","status":"Active","insurer":"ICICI Lombard"},
@@ -85,7 +100,9 @@
     {"hospital_name":"Sankalp Eye Hospital","city":"Hyderabad","state":"Telangana","status":"De-empanelled","insurer":""},
     {"hospital_name":"Seva Critical Care","city":"Delhi","state":"Delhi","status":"Blacklisted","insurer":"Star Health"}
   ];
+  const hospitalsSampleBackup = [...hospitals]; // keep original sample
 
+  // ----- ELEMENTS -----
   const el = {
     q: document.getElementById('q'),
     list: document.getElementById('list'),
@@ -97,44 +114,63 @@
     pasteArea: document.getElementById('pasteArea'),
     paste: document.getElementById('paste'),
     btnLoad: document.getElementById('btnLoad'),
-    btnCancelPaste: document.getElementById('btnCancelPaste')
+    btnCancelPaste: document.getElementById('btnCancelPaste'),
+    adminTools: document.getElementById('adminTools'),
+    adminHint: document.getElementById('adminHint'),
+    btnLogout: document.getElementById('btnLogout')
   };
 
-  // helpers
+  // ----- HELPERS -----
   function normalizeStr(s){ return (s||'').toString().trim().toLowerCase(); }
+
   function renderList(items){
     el.list.innerHTML = '';
     el.count.textContent = items.length + (items.length===1 ? ' hospital found' : ' hospitals found');
     if(!items.length){ el.list.innerHTML = '<div style="color:#666">No results</div>'; return; }
-    items.forEach(it=>{
+    // render up to MAX_RENDER
+    const r = items.slice(0, MAX_RENDER);
+    r.forEach(it=>{
       const card = document.createElement('div'); card.className='card';
       const left = document.createElement('div');
-      left.innerHTML = '<strong>'+ (it.hospital_name||'—') +'</strong><div class="meta">'+ (it.city? (it.city + (it.state? ', '+it.state : '')) : (it.state||'')) +'</div><div class="meta" style="margin-top:6px;font-size:13px">Insurer: '+ (it.insurer || '—') + '</div>';
+      const name = document.createElement('div'); name.innerHTML = '<strong>'+ (it.hospital_name||'—') +'</strong>';
+      const cityState = document.createElement('div'); cityState.className='meta';
+      cityState.textContent = (it.city? (it.city + (it.state? ', '+it.state : '')) : (it.state||''));
+      const insurer = document.createElement('div'); insurer.className='meta'; insurer.style.marginTop='6px'; insurer.textContent = 'Insurer: ' + (it.insurer || '—');
+      left.appendChild(name); left.appendChild(cityState); left.appendChild(insurer);
+
       const right = document.createElement('div'); right.style.textAlign='right';
       const st = (it.status||'Unknown').toLowerCase();
-      const badge = document.createElement('div'); badge.className='badge '+(st.includes('active')?'active':(st.includes('black')?'black':'')); badge.textContent = it.status || 'Unknown';
+      const badge = document.createElement('div'); 
+      badge.className='badge '+(st.includes('active')?'active':(st.includes('black')?'black':'')); 
+      badge.textContent = it.status || 'Unknown';
       right.appendChild(badge);
+
       card.appendChild(left); card.appendChild(right);
       el.list.appendChild(card);
     });
+    if(items.length > MAX_RENDER){
+      const more = document.createElement('div'); more.style.color='#666'; more.style.marginTop='6px';
+      more.textContent = `Showing ${MAX_RENDER} of ${items.length} results. Refine search to see fewer results.`;
+      el.list.appendChild(more);
+    }
   }
 
-  // search logic (debounce)
+  // ----- SEARCH -----
   let timer = null;
   function doSearch(){
     const q = normalizeStr(el.q.value);
-    if(!q){ renderList(hospitals.slice(0,200)); return; } // avoid huge renders
+    if(!q){ renderList(hospitals.slice(0, PREVIEW_LIMIT)); return; }
     const out = hospitals.filter(r=>{
       return normalizeStr(r.hospital_name).includes(q) || normalizeStr(r.city).includes(q);
-    }).slice(0,500); // limit results render
+    });
     renderList(out);
   }
   el.q.addEventListener('input', ()=> {
     clearTimeout(timer);
-    timer = setTimeout(doSearch, 250);
+    timer = setTimeout(doSearch, DEBOUNCE_MS);
   });
 
-  // file upload
+  // ----- FILE UPLOAD (client-only) -----
   el.file.addEventListener('change', function(e){
     const f = e.target.files[0]; if(!f) return;
     const reader = new FileReader();
@@ -145,73 +181,107 @@
     reader.readAsText(f);
   });
 
-  // paste controls
-  el.btnPaste.addEventListener('click', ()=> { el.pasteArea.style.display='block'; el.paste.focus(); });
-  el.btnCancelPaste.addEventListener('click', ()=> { el.pasteArea.style.display='none'; el.paste.value=''; });
+  // ----- PASTE UI -----
+  el.btnPaste.addEventListener('click', ()=> { el.pasteArea.classList.remove('hidden'); el.paste.focus(); });
+  el.btnCancelPaste.addEventListener('click', ()=> { el.pasteArea.classList.add('hidden'); el.paste.value=''; });
   el.btnLoad.addEventListener('click', ()=> {
     const txt = el.paste.value.trim(); if(!txt){ alert('Paste CSV or JSON first'); return; }
     parseAndLoad(txt);
-    el.pasteArea.style.display='none'; el.paste.value='';
+    el.pasteArea.classList.add('hidden'); el.paste.value='';
   });
 
-  // sample button
-  el.btnSample.addEventListener('click', ()=> { hospitals = [...hospitalsSample]; showStatus('Sample data loaded'); renderList(hospitals.slice(0,200)); });
+  // ----- SAMPLE BUTTON -----
+  el.btnSample.addEventListener('click', ()=> { hospitals = [...hospitalsSampleBackup]; showStatus('Sample data loaded'); renderList(hospitals.slice(0, PREVIEW_LIMIT)); });
 
-  // parse CSV or JSON
+  // ----- PARSE & MAP -----
   function parseAndLoad(text){
     showStatus('Parsing data...');
-    // detect JSON
-    try{
+    // try JSON first
+    try {
       const maybe = JSON.parse(text);
-      if(Array.isArray(maybe)){ hospitals = mapRecords(maybe); showStatus('Custom JSON loaded ('+hospitals.length+' rows)'); renderList(hospitals.slice(0,200)); return; }
-    }catch(e){}
-    // else parse CSV via PapaParse
+      if(Array.isArray(maybe)){
+        hospitals = mapRecords(maybe);
+        afterLoad();
+        return;
+      }
+    } catch(e){}
+    // CSV via PapaParse
     const parsed = Papa.parse(text.trim(), {header:true, skipEmptyLines:true});
     if(parsed && parsed.data){
       hospitals = mapRecords(parsed.data);
-      showStatus('Custom CSV loaded ('+hospitals.length+' rows)');
-      if(hospitals.length > 1000) showStatus('Loaded '+hospitals.length+' rows. Warning: large dataset may slow browser.');
-      renderList(hospitals.slice(0,200));
+      afterLoad();
       return;
     }
     showStatus('Could not parse data. Ensure CSV has headers or paste valid JSON array.');
   }
 
-  // simple mapping to canonical fields
   function mapRecords(rows){
-    const mapped = rows.map(r=>{
+    // canonical fields and common header variants
+    return rows.map(r=>{
       const obj = {};
-      // columns to try for each canonical field
-      const pick = (keys)=>{
-        for(const k of keys){
-          if(r[k]!==undefined && r[k] !== null && String(r[k]).trim()!=='') return String(r[k]).trim();
+      const keys = Object.keys(r || {});
+      const get = (variants)=>{
+        // direct keys first
+        for(const v of variants){
+          if(r[v] !== undefined && r[v] !== null && String(r[v]).trim() !== '') return String(r[v]).trim();
         }
-        // try case-insensitive key match
-        const keysLower = Object.keys(r).reduce((acc,k)=>{acc[k.toLowerCase()]=r[k];return acc;},{});
-        for(const k of keys){
-          if(keysLower[k]) return String(keysLower[k]).trim();
+        // case-insensitive
+        const lowerMap = {};
+        for(const k of keys) lowerMap[k.toLowerCase()] = r[k];
+        for(const v of variants){
+          if(lowerMap[v.toLowerCase()] !== undefined && lowerMap[v.toLowerCase()] !== null && String(lowerMap[v.toLowerCase()]).trim() !== '') return String(lowerMap[v.toLowerCase()]).trim();
         }
         return '';
       };
-      obj.hospital_name = pick(['hospital_name','hospital','name','hospitalname']);
-      obj.address = pick(['address','addr']);
-      obj.city = pick(['city','town','district']);
-      obj.state = pick(['state','st','province']);
-      obj.status = pick(['status','blacklist_status','delisted_status']) || 'Unknown';
-      obj.insurer = pick(['insurer','company','payer']);
-      obj.action_date = pick(['action_date','date','delisted_on']);
-      obj.geo_lat = pick(['geo_lat','latitude','lat']);
-      obj.geo_lng = pick(['geo_lng','longitude','long','lng']);
+      obj.hospital_name = get(['hospital_name','hospital','name','hospitalname']) || '';
+      obj.address = get(['address','addr','address_line']);
+      obj.city = get(['city','town','district']);
+      obj.state = get(['state','st','province']);
+      obj.status = get(['status','blacklist_status','delisted_status']) || 'Unknown';
+      obj.insurer = get(['insurer','company','payer']);
+      obj.action_date = get(['action_date','date','delisted_on']);
+      obj.geo_lat = get(['geo_lat','latitude','lat']);
+      obj.geo_lng = get(['geo_lng','longitude','long','lng']);
       return obj;
     }).filter(x=>x.hospital_name && x.hospital_name.length>0);
-    return mapped;
   }
 
-  function showStatus(txt){ el.status.textContent = txt; setTimeout(()=>{ if(el.status.textContent===txt) el.status.textContent = '' }, 6000); }
+  function afterLoad(){
+    showStatus('Custom data loaded ('+hospitals.length+' rows)');
+    if(hospitals.length > 1000) showStatus('Warning: large dataset loaded ('+hospitals.length+'). Browser may slow.');
+    renderList(hospitals.slice(0, PREVIEW_LIMIT));
+  }
 
-  // initial render
-  const hospitalsSample = hospitals.slice(); // preserve
-  renderList(hospitals.slice(0,200));
+  // ----- STATUS -----
+  function showStatus(txt){
+    el.status.textContent = txt;
+    setTimeout(()=>{ if(el.status.textContent === txt) el.status.textContent = '' }, 6000);
+  }
+
+  // ----- ADMIN MODE (Ctrl + A to open) -----
+  let adminMode = false;
+  document.addEventListener("keydown", function (e) {
+    if (e.ctrlKey && e.key.toLowerCase() === "a") {
+      const pwd = prompt("Enter Admin Password:");
+      if (pwd === ADMIN_PASSWORD) {
+        adminMode = true;
+        el.adminTools.classList.remove('hidden');
+        showStatus('Admin mode enabled');
+      } else {
+        alert("Incorrect password");
+      }
+    }
+  });
+
+  // logout admin
+  el.btnLogout.addEventListener('click', function(){
+    adminMode = false;
+    el.adminTools.classList.add('hidden');
+    showStatus('Admin mode disabled');
+  });
+
+  // ----- initial render -----
+  renderList(hospitals.slice(0, PREVIEW_LIMIT));
 
 })();
 </script>
