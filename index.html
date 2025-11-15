@@ -1,266 +1,219 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-  <title>BFSI Open Data</title>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Data essays, dashboards, and storytelling from the Indian BFSI world. Built by experts, designed for the underserved.">
-
-  <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-6DWB0Q3MJB"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-6DWB0Q3MJB');
-  </script>
-
-  <style>
-    :root {
-      --bg-color: #ffffff;
-      --text-color: #2c3e50;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body.dark-theme {
-      --bg-color: #121212;
-      --text-color: #ffffff;
-    }
-
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: var(--bg-color);
-      color: var(--text-color);
-      transition: background-color 0.3s, color 0.3s;
-    }
-
-    .navbar {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 20px;
-      z-index: 2;
-    }
-
-    .navbar img {
-      height: 110px;
-      background: white;
-      padding: 10px;
-      border-radius: 10px;
-      box-shadow: 0 0 8px rgba(0,0,0,0.2);
-    }
-
-    .navbar-right {
-      margin-right: 20px;
-    }
-
-    .theme-toggle {
-      padding: 6px 12px;
-      background: #fff;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 0.9em;
-    }
-
-    body.dark-theme .theme-toggle {
-      background: #333;
-      color: #fff;
-      border-color: #666;
-    }
-
-    .social-floating {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      z-index: 999;
-    }
-
-    .social-icon {
-      width: 40px;
-      height: 40px;
-    }
-
-    header {
-      background-color: transparent;
-      padding: 80px 20px 40px;
-      text-align: center;
-    }
-
-    header h1 {
-      font-size: 3.5em;
-      margin-bottom: 10px;
-    }
-
-    header p {
-      font-size: 1.1em;
-      margin: 0 auto;
-    }
-
-    .cta-button {
-      display: inline-block;
-      margin-top: 25px;
-      padding: 12px 20px;
-      background-color: #0077cc;
-      color: white;
-      font-weight: bold;
-      text-decoration: none;
-      border-radius: 8px;
-      transition: background-color 0.3s;
-    }
-
-    .cta-button:hover {
-      background-color: #005fa3;
-    }
-
-    .content {
-      max-width: 850px;
-      margin: 20px auto;
-      padding: 0 20px;
-    }
-
-    h2 {
-      color: var(--text-color);
-    }
-
-    a {
-      color: #0077cc;
-      text-decoration: none;
-    }
-
-    a:hover {
-      text-decoration: underline;
-    }
-
-    .section {
-      margin-bottom: 20px;
-    }
-
-    iframe {
-      width: 100%;
-      height: 700px;
-      border: 0;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      margin-bottom: 10px;
-    }
-
-    .disclaimer {
-      font-size: 12px;
-      color: #666;
-      margin-top: 5px;
-    }
-
-    footer {
-      text-align: center;
-      font-size: 0.8em;
-      color: #999;
-      padding: 10px 0;
-      margin-top: 10px;
-    }
-
-    @media only screen and (max-width: 768px) {
-      header h1 {
-        font-size: 2.2em;
-      }
-
-      .cta-button {
-        font-size: 1em;
-        padding: 10px 16px;
-      }
-
-      iframe {
-        height: 450px;
-        margin-bottom: 10px;
-      }
-
-      .navbar img {
-        height: 80px;
-      }
-
-      .navbar {
-        padding: 6px 12px;
-      }
-
-      .navbar-right {
-        margin-right: 10px;
-      }
-
-      .social-icon {
-        width: 30px;
-        height: 30px;
-      }
-
-      .content {
-        padding: 0 10px;
-      }
-
-      .section {
-        margin-bottom: 15px;
-      }
-    }
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>BFSI Open Data — Hospital Blacklist Search</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#f7f8fb;--card:#fff;--muted:#65737e;--accent:#0b6b63;--badge-green:#dff7ec;--badge-red:#ffecec}
+  body{font-family:Inter,system-ui,Arial,sans-serif;margin:0;background:var(--bg);color:#0b1820}
+  .wrap{max-width:980px;margin:28px auto;padding:20px}
+  header{display:flex;align-items:center;justify-content:space-between}
+  h1{margin:0;font-size:22px}
+  p.sub{margin:6px 0 20px;color:var(--muted)}
+  .controls{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+  .search{flex:1;min-width:220px}
+  input[type="search"]{width:100%;padding:12px 14px;border:1px solid #e1e6eb;border-radius:8px;font-size:15px}
+  button{background:#0b6b63;color:#fff;border:0;padding:10px 14px;border-radius:8px;cursor:pointer}
+  .secondary{background:#fff;border:1px solid #d7dde2;color:#0b1820}
+  .small{padding:8px 10px;font-size:13px}
+  .info{margin:12px 0;color:#1f8a5b}
+  .count{margin:10px 0;color:#223}
+  .list{display:grid;gap:10px}
+  .card{background:var(--card);border-radius:10px;padding:14px;border:1px solid #e6eaee;display:flex;justify-content:space-between;align-items:center}
+  .meta{color:var(--muted);font-size:13px;margin-top:6px}
+  .badge{padding:6px 10px;border-radius:999px;font-size:13px}
+  .badge.black{background:var(--badge-red);color:#b02a2a}
+  .badge.active{background:var(--badge-green);color:#166d35}
+  .uploader{display:flex;gap:8px;align-items:center}
+  .textarea{width:100%;min-height:80px;padding:10px;border-radius:8px;border:1px dashed #cfd8df;background:#fff}
+  .footer{margin-top:18px;color:var(--muted);font-size:13px}
+  @media(max-width:640px){header{flex-direction:column;align-items:flex-start} .controls{flex-direction:column}}
+</style>
 </head>
 <body>
-  <div class="navbar">
-    <a href="/"><img src="Logo.png" alt="BFSI Open Data Logo"></a>
-    <div class="navbar-right">
-      <button class="theme-toggle" onclick="toggleTheme()">Toggle Theme</button>
-    </div>
-  </div>
-
-  <div class="social-floating">
-    <a href="https://www.linkedin.com/company/bfsi-open-data/?viewAsMember=true" target="_blank"><img class="social-icon" src="https://cdn-icons-png.flaticon.com/512/145/145807.png" alt="LinkedIn"></a>
-    <a href="https://www.instagram.com/bfsi_open_data/" target="_blank"><img class="social-icon" src="https://cdn-icons-png.flaticon.com/512/174/174855.png" alt="Instagram"></a>
-    <a href="https://x.com/bfsiopendata" target="_blank"><img class="social-icon" src="https://cdn-icons-png.flaticon.com/512/733/733579.png" alt="Twitter/X"></a>
-  </div>
-
+<div class="wrap">
   <header>
-    <h1>BFSI Open Data</h1>
-    <p><strong>Insurance & Financial Services Expert | Strategist | Advocate for the Underserved</strong></p>
-    <a href="#gi-dashboard" class="cta-button">📈 Explore General Insurance Dashboard →</a>
+    <div>
+      <h1>BFSI Open Data — Hospital Blacklist Search</h1>
+      <p class="sub">Quickly search hospitals and check blacklist status</p>
+    </div>
+    <div style="text-align:right"><img src="" alt="BFSI Logo" style="height:34px;opacity:.7"></div>
   </header>
 
-  <div id="main" class="content">
-    <div class="section">
-      <p><strong>Insurance | Financial data | News | Analysis | Storytelling using Data</strong></p>
+  <div class="controls">
+    <div class="search">
+      <input id="q" type="search" placeholder="Search hospital name or city..." aria-label="search">
     </div>
 
-    <div class="section" id="gi-dashboard">
-      <h2>General Insurance Dashboard</h2>
-      <p>This dashboard presents an insurer-wise snapshot of gross premium numbers across Motor, Health, and Personal Accident lines. Filter and explore by Year or Insurer.</p>
-      <iframe src="https://lookerstudio.google.com/embed/reporting/b311387f-204c-489a-879d-5f8594c5019e/page/RA7LF"
-              allowfullscreen sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox">
-      </iframe>
-      <p class="disclaimer"><strong>Disclaimer:</strong> The information and visuals presented in this dashboard are compiled from publicly available data sources and are intended for general informational purposes only.</p>
-    </div>
-
-    <div class="section">
-      <h2>Let’s Connect</h2>
-      <p>Reach out to collaborate or discuss ideas. 📧 <a href="mailto:bfsiopendata@gmail.com">bfsiopendata@gmail.com</a></p>
+    <div class="uploader">
+      <button id="btnSample" class="small secondary">Use sample data</button>
+      <label class="small secondary" style="display:inline-block;padding:9px 10px;border-radius:8px;cursor:pointer;">
+        Upload CSV<input id="file" type="file" accept=".csv,.json" style="display:none">
+      </label>
+      <button id="btnPaste" class="small secondary">Paste CSV/JSON</button>
     </div>
   </div>
 
-  <footer>
-    &copy; 2025 BFSI Open Data · All rights reserved
-  </footer>
+  <div id="pasteArea" style="display:none;margin-bottom:10px">
+    <textarea id="paste" class="textarea" placeholder="Paste CSV or JSON here (include header row)"></textarea>
+    <div style="margin-top:8px">
+      <button id="btnLoad" class="small">Load pasted data</button>
+      <button id="btnCancelPaste" class="small secondary">Cancel</button>
+    </div>
+  </div>
 
-  <script>
-    function toggleTheme() {
-      document.body.classList.toggle('dark-theme');
+  <div id="status" class="info" aria-live="polite"></div>
+  <div id="count" class="count"></div>
+
+  <div id="list" class="list" aria-live="polite"></div>
+
+  <div class="footer">Tip: paste a few rows from Excel as CSV or upload your CSV. If dataset is large (>1000 rows) browser may slow; use sample for demo.</div>
+</div>
+
+<!-- PapaParse for CSV parse -->
+<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+<script>
+(function(){
+  // minimal dataset (6 sample rows)
+  let hospitals = [
+    {"hospital_name":"Care Life Hospital","city":"Thane","state":"Maharashtra","status":"Blacklisted","insurer":"Aditya Birla Health"},
+    {"hospital_name":"City General Hospital","city":"Mumbai","state":"Maharashtra","status":"Active","insurer":"ICICI Lombard"},
+    {"hospital_name":"Sunrise Multi Speciality","city":"Pune","state":"Maharashtra","status":"Blacklisted","insurer":"HDFC ERGO"},
+    {"hospital_name":"Green Valley Clinic","city":"Bengaluru","state":"Karnataka","status":"Active","insurer":"Bajaj Allianz"},
+    {"hospital_name":"Sankalp Eye Hospital","city":"Hyderabad","state":"Telangana","status":"De-empanelled","insurer":""},
+    {"hospital_name":"Seva Critical Care","city":"Delhi","state":"Delhi","status":"Blacklisted","insurer":"Star Health"}
+  ];
+
+  const el = {
+    q: document.getElementById('q'),
+    list: document.getElementById('list'),
+    count: document.getElementById('count'),
+    status: document.getElementById('status'),
+    file: document.getElementById('file'),
+    btnSample: document.getElementById('btnSample'),
+    btnPaste: document.getElementById('btnPaste'),
+    pasteArea: document.getElementById('pasteArea'),
+    paste: document.getElementById('paste'),
+    btnLoad: document.getElementById('btnLoad'),
+    btnCancelPaste: document.getElementById('btnCancelPaste')
+  };
+
+  // helpers
+  function normalizeStr(s){ return (s||'').toString().trim().toLowerCase(); }
+  function renderList(items){
+    el.list.innerHTML = '';
+    el.count.textContent = items.length + (items.length===1 ? ' hospital found' : ' hospitals found');
+    if(!items.length){ el.list.innerHTML = '<div style="color:#666">No results</div>'; return; }
+    items.forEach(it=>{
+      const card = document.createElement('div'); card.className='card';
+      const left = document.createElement('div');
+      left.innerHTML = '<strong>'+ (it.hospital_name||'—') +'</strong><div class="meta">'+ (it.city? (it.city + (it.state? ', '+it.state : '')) : (it.state||'')) +'</div><div class="meta" style="margin-top:6px;font-size:13px">Insurer: '+ (it.insurer || '—') + '</div>';
+      const right = document.createElement('div'); right.style.textAlign='right';
+      const st = (it.status||'Unknown').toLowerCase();
+      const badge = document.createElement('div'); badge.className='badge '+(st.includes('active')?'active':(st.includes('black')?'black':'')); badge.textContent = it.status || 'Unknown';
+      right.appendChild(badge);
+      card.appendChild(left); card.appendChild(right);
+      el.list.appendChild(card);
+    });
+  }
+
+  // search logic (debounce)
+  let timer = null;
+  function doSearch(){
+    const q = normalizeStr(el.q.value);
+    if(!q){ renderList(hospitals.slice(0,200)); return; } // avoid huge renders
+    const out = hospitals.filter(r=>{
+      return normalizeStr(r.hospital_name).includes(q) || normalizeStr(r.city).includes(q);
+    }).slice(0,500); // limit results render
+    renderList(out);
+  }
+  el.q.addEventListener('input', ()=> {
+    clearTimeout(timer);
+    timer = setTimeout(doSearch, 250);
+  });
+
+  // file upload
+  el.file.addEventListener('change', function(e){
+    const f = e.target.files[0]; if(!f) return;
+    const reader = new FileReader();
+    reader.onload = function(evt){
+      const text = evt.target.result;
+      parseAndLoad(text);
+    };
+    reader.readAsText(f);
+  });
+
+  // paste controls
+  el.btnPaste.addEventListener('click', ()=> { el.pasteArea.style.display='block'; el.paste.focus(); });
+  el.btnCancelPaste.addEventListener('click', ()=> { el.pasteArea.style.display='none'; el.paste.value=''; });
+  el.btnLoad.addEventListener('click', ()=> {
+    const txt = el.paste.value.trim(); if(!txt){ alert('Paste CSV or JSON first'); return; }
+    parseAndLoad(txt);
+    el.pasteArea.style.display='none'; el.paste.value='';
+  });
+
+  // sample button
+  el.btnSample.addEventListener('click', ()=> { hospitals = [...hospitalsSample]; showStatus('Sample data loaded'); renderList(hospitals.slice(0,200)); });
+
+  // parse CSV or JSON
+  function parseAndLoad(text){
+    showStatus('Parsing data...');
+    // detect JSON
+    try{
+      const maybe = JSON.parse(text);
+      if(Array.isArray(maybe)){ hospitals = mapRecords(maybe); showStatus('Custom JSON loaded ('+hospitals.length+' rows)'); renderList(hospitals.slice(0,200)); return; }
+    }catch(e){}
+    // else parse CSV via PapaParse
+    const parsed = Papa.parse(text.trim(), {header:true, skipEmptyLines:true});
+    if(parsed && parsed.data){
+      hospitals = mapRecords(parsed.data);
+      showStatus('Custom CSV loaded ('+hospitals.length+' rows)');
+      if(hospitals.length > 1000) showStatus('Loaded '+hospitals.length+' rows. Warning: large dataset may slow browser.');
+      renderList(hospitals.slice(0,200));
+      return;
     }
-  </script>
+    showStatus('Could not parse data. Ensure CSV has headers or paste valid JSON array.');
+  }
+
+  // simple mapping to canonical fields
+  function mapRecords(rows){
+    const mapped = rows.map(r=>{
+      const obj = {};
+      // columns to try for each canonical field
+      const pick = (keys)=>{
+        for(const k of keys){
+          if(r[k]!==undefined && r[k] !== null && String(r[k]).trim()!=='') return String(r[k]).trim();
+        }
+        // try case-insensitive key match
+        const keysLower = Object.keys(r).reduce((acc,k)=>{acc[k.toLowerCase()]=r[k];return acc;},{});
+        for(const k of keys){
+          if(keysLower[k]) return String(keysLower[k]).trim();
+        }
+        return '';
+      };
+      obj.hospital_name = pick(['hospital_name','hospital','name','hospitalname']);
+      obj.address = pick(['address','addr']);
+      obj.city = pick(['city','town','district']);
+      obj.state = pick(['state','st','province']);
+      obj.status = pick(['status','blacklist_status','delisted_status']) || 'Unknown';
+      obj.insurer = pick(['insurer','company','payer']);
+      obj.action_date = pick(['action_date','date','delisted_on']);
+      obj.geo_lat = pick(['geo_lat','latitude','lat']);
+      obj.geo_lng = pick(['geo_lng','longitude','long','lng']);
+      return obj;
+    }).filter(x=>x.hospital_name && x.hospital_name.length>0);
+    return mapped;
+  }
+
+  function showStatus(txt){ el.status.textContent = txt; setTimeout(()=>{ if(el.status.textContent===txt) el.status.textContent = '' }, 6000); }
+
+  // initial render
+  const hospitalsSample = hospitals.slice(); // preserve
+  renderList(hospitals.slice(0,200));
+
+})();
+</script>
 </body>
 </html>
